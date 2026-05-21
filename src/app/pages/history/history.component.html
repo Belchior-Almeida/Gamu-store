@@ -1,0 +1,182 @@
+<!-- ─── Page Header ──────────────────────────────────────────────────────── -->
+<section class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">História e Importância da Fruta Amazônica</h1>
+    <p class="page-header__subtitle">
+      Milhões de anos de evolução, séculos de sabedoria dos povos da floresta e um futuro que depende de nossas escolhas.
+    </p>
+  </div>
+</section>
+
+@if (history) {
+  <!-- ─── Amazonian Fruits Importance ──────────────────────────────────────── -->
+  <section class="section section-dark">
+    <div class="container">
+      <h2 class="section-title">A Riqueza da Amazônia</h2>
+      <div class="amazon-intro">
+        <p class="amazon-intro__text">{{ amazonianFruits.intro }}</p>
+      </div>
+
+      <div class="importance-grid">
+        @for (item of amazonianFruits.importance; track item.title) {
+          <div class="importance-card">
+            <div class="importance-card__icon">
+              <i [class]="item.icon"></i>
+            </div>
+            <h3 class="importance-card__title">{{ item.title }}</h3>
+            <p class="importance-card__text">{{ item.text }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Timeline da Gamu ─────────────────────────────────────────────────── -->
+  <section class="section section-forest">
+    <div class="container">
+      <h2 class="section-title">Nossa Jornada</h2>
+      <p class="section-subtitle">
+        De uma ideia nascida na floresta até um movimento global de preservação e consumo consciente.
+      </p>
+
+      <div class="company-timeline">
+        @for (event of history.timeline; track event.year) {
+          <div class="timeline-event">
+            <div class="timeline-event__year-col">
+              <span class="timeline-event__year">{{ event.year }}</span>
+            </div>
+            <div class="timeline-event__connector">
+              <div class="timeline-event__dot"></div>
+              <div class="timeline-event__line"></div>
+            </div>
+            <div class="timeline-event__content">
+              <h3 class="timeline-event__title">{{ event.title }}</h3>
+              <p class="timeline-event__description">{{ event.description }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Accordion — Frutas em Destaque ───────────────────────────────────── -->
+  <section class="section section-green">
+    <div class="container">
+      <h2 class="section-title">Frutas Amazônicas em Destaque</h2>
+      <p class="section-subtitle">
+        Cada fruta conta uma história única de adaptação, nutrição e cultura.
+      </p>
+
+      <p-accordion [multiple]="true" styleClass="fruits-accordion">
+        <p-accordion-panel value="acai">
+          <p-accordion-header>
+            <span class="accordion-header">
+              <i class="pi pi-leaf"></i> Açaí — O Rei da Amazônia
+            </span>
+          </p-accordion-header>
+          <p-accordion-content>
+            <div class="fruit-content">
+              <p>O açaí (<em>Euterpe oleracea</em>) é oriundo das florestas alagadas do estuário amazônico. Cultivado por povos indígenas há séculos como alimento base, é hoje reconhecido mundialmente como superalimento.</p>
+              <p>Com altíssima concentração de antioxidantes (10 vezes mais que a uva), gorduras saudáveis (ômega-9) e vitamina E, o açaí combate o estresse oxidativo e fornece energia de longa duração.</p>
+              <div class="fruit-facts">
+                <span class="fruit-fact"><i class="pi pi-map-marker"></i> Pará, Amapá e Maranhão</span>
+                <span class="fruit-fact"><i class="pi pi-calendar"></i> Colheita: julho a dezembro</span>
+                <span class="fruit-fact"><i class="pi pi-heart"></i> Rico em antioxidantes e ômega-9</span>
+              </div>
+            </div>
+          </p-accordion-content>
+        </p-accordion-panel>
+
+        <p-accordion-panel value="cupuacu">
+          <p-accordion-header>
+            <span class="accordion-header">
+              <i class="pi pi-leaf"></i> Cupuaçu — O Chocolate da Amazônia
+            </span>
+          </p-accordion-header>
+          <p-accordion-content>
+            <div class="fruit-content">
+              <p>O cupuaçu (<em>Theobroma grandiflorum</em>) é parente do cacau e produz uma polpa cremosa com sabor único entre o chocolate e a baunilha. Seus teobrominoides oferecem efeitos estimulantes suaves e relaxantes ao mesmo tempo.</p>
+              <p>A manteiga de cupuaçu, extraída da semente, é mais hidratante que a de karité e tem grande aplicação em cosméticos naturais. A polpa é base para sorvetes, sucos e doces inigualáveis.</p>
+              <div class="fruit-facts">
+                <span class="fruit-fact"><i class="pi pi-map-marker"></i> Amazônia e Pré-Amazônia</span>
+                <span class="fruit-fact"><i class="pi pi-calendar"></i> Colheita: janeiro a abril</span>
+                <span class="fruit-fact"><i class="pi pi-heart"></i> Rico em vitamina B e pectina</span>
+              </div>
+            </div>
+          </p-accordion-content>
+        </p-accordion-panel>
+
+        <p-accordion-panel value="camucamu">
+          <p-accordion-header>
+            <span class="accordion-header">
+              <i class="pi pi-leaf"></i> Camu-camu — A Superfruta da Vitamina C
+            </span>
+          </p-accordion-header>
+          <p-accordion-content>
+            <div class="fruit-content">
+              <p>O camu-camu (<em>Myrciaria dubia</em>) cresce às margens dos rios amazônicos e possui a maior concentração de vitamina C entre todas as frutas conhecidas — até 60 vezes mais que a laranja.</p>
+              <p>Estudos científicos demonstram suas propriedades anti-inflamatórias, antivirais e neuroprotetoras. Indígenas da Amazônia usam a fruta há séculos no tratamento de gripes, infecções e fortalecimento imunológico.</p>
+              <div class="fruit-facts">
+                <span class="fruit-fact"><i class="pi pi-map-marker"></i> Amazônia Peruana e Brasileira</span>
+                <span class="fruit-fact"><i class="pi pi-calendar"></i> Colheita: novembro a fevereiro</span>
+                <span class="fruit-fact"><i class="pi pi-heart"></i> 60x mais vitamina C que a laranja</span>
+              </div>
+            </div>
+          </p-accordion-content>
+        </p-accordion-panel>
+
+        <p-accordion-panel value="guarana">
+          <p-accordion-header>
+            <span class="accordion-header">
+              <i class="pi pi-leaf"></i> Guaraná — A Energia da Floresta
+            </span>
+          </p-accordion-header>
+          <p-accordion-content>
+            <div class="fruit-content">
+              <p>O guaraná (<em>Paullinia cupana</em>) é uma trepadeira nativa do Amazonas cultivada pelo povo Sateré-Mawé há mais de 1.000 anos. A semente tem 2x mais cafeína que o grão de café e, além disso, contém guaranina, que prolonga os efeitos energéticos.</p>
+              <p>Na tradição indígena, o guaraná é símbolo de força, coragem e resistência. O bastão de guaraná ralado artesanalmente é um bem cultural imaterial dos Sateré-Mawé.</p>
+              <div class="fruit-facts">
+                <span class="fruit-fact"><i class="pi pi-map-marker"></i> Maués, Amazonas</span>
+                <span class="fruit-fact"><i class="pi pi-calendar"></i> Colheita: setembro a novembro</span>
+                <span class="fruit-fact"><i class="pi pi-heart"></i> Energético natural + antioxidante</span>
+              </div>
+            </div>
+          </p-accordion-content>
+        </p-accordion-panel>
+      </p-accordion>
+    </div>
+  </section>
+
+  <!-- ─── CTA ────────────────────────────────────────────────────────────── -->
+  <section class="section section-dark">
+    <div class="container">
+      <div class="history-cta">
+        <div class="history-cta__text">
+          <h2>Experimente a Amazônia</h2>
+          <p>
+            Cada produto Gamu é uma forma de apoiar a floresta, os seus povos e
+            a biodiversidade que alimenta e cura o mundo.
+          </p>
+        </div>
+        <div class="history-cta__actions">
+          <a routerLink="/produtos">
+            <p-button
+              label="Ver Produtos"
+              icon="pi pi-shopping-bag"
+              styleClass="p-button-gamu"
+              size="large"
+            />
+          </a>
+          <a routerLink="/quem-somos">
+            <p-button
+              label="Quem Somos"
+              icon="pi pi-users"
+              styleClass="p-button-outline-gamu"
+              size="large"
+            />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+}

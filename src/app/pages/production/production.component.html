@@ -1,0 +1,119 @@
+<!-- ─── Page Header ──────────────────────────────────────────────────────── -->
+<section class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">Nossa Produção</h1>
+    <p class="page-header__subtitle">
+      Da floresta ao consumidor — um processo cuidadoso, sustentável e transparente.
+    </p>
+  </div>
+</section>
+
+@if (production) {
+  <!-- ─── Production Steps ────────────────────────────────────────────────── -->
+  <section class="section section-dark">
+    <div class="container">
+      <h2 class="section-title">Nossa Cadeia Produtiva</h2>
+      <p class="section-subtitle">
+        Cada etapa é pensada para preservar a qualidade dos produtos e o respeito ao meio ambiente.
+      </p>
+
+      <div class="steps-grid">
+        @for (stage of production.stages; track stage.step) {
+          <div class="step-card">
+            <div class="step-card__number">{{ stage.step }}</div>
+            <div class="step-card__icon">
+              <i [class]="stage.icon"></i>
+            </div>
+            <h3 class="step-card__title">{{ stage.title }}</h3>
+            <p class="step-card__description">{{ stage.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Timeline (PrimeNG) ─────────────────────────────────────────────── -->
+  <section class="section section-forest">
+    <div class="container">
+      <h2 class="section-title">Do Campo à Mesa</h2>
+      <p class="section-subtitle">
+        Visualize o fluxo completo — da colheita na floresta até chegar na sua casa.
+      </p>
+
+      <p-timeline [value]="production.stages" align="alternate" styleClass="production-timeline">
+        <ng-template pTemplate="marker" let-stage>
+          <div class="timeline-marker">
+            <i [class]="stage.icon"></i>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="content" let-stage>
+          <div class="timeline-card">
+            <span class="timeline-card__step">Etapa {{ stage.step }}</span>
+            <h4 class="timeline-card__title">{{ stage.title }}</h4>
+            <p class="timeline-card__text">{{ stage.description }}</p>
+          </div>
+        </ng-template>
+      </p-timeline>
+    </div>
+  </section>
+
+  <!-- ─── Certifications ─────────────────────────────────────────────────── -->
+  <section class="section section-green">
+    <div class="container">
+      <div class="cert-grid">
+        <div class="cert-section">
+          <h2 class="section-title" style="text-align: left; &::after { margin: 0.75rem 0 0; }">
+            Certificações
+          </h2>
+          <p class="cert-section__subtitle">
+            Nossa qualidade e compromisso sustentável são comprovados por reconhecimentos internacionais.
+          </p>
+          <ul class="cert-list">
+            @for (cert of production.certifications; track cert) {
+              <li class="cert-item">
+                <i class="pi pi-check-circle"></i>
+                <span>{{ cert }}</span>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <div class="cert-section">
+          <h2 class="section-title" style="text-align: left;">
+            Parceiros Comunitários
+          </h2>
+          <p class="cert-section__subtitle">
+            Trabalhamos em conjunto com comunidades locais que são as guardiãs da floresta.
+          </p>
+          <ul class="cert-list">
+            @for (partner of production.partners; track partner) {
+              <li class="cert-item">
+                <i class="pi pi-users"></i>
+                <span>{{ partner }}</span>
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA ────────────────────────────────────────────────────────────── -->
+  <section class="section section-dark">
+    <div class="container">
+      <div class="production-cta">
+        <h2>Conheça o resultado desse processo</h2>
+        <p>Cada produto carrega a história de quem cuida da floresta e a ciência de quem cuida da sua saúde.</p>
+        <a routerLink="/produtos">
+          <p-button
+            label="Ver Nossos Produtos"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            styleClass="p-button-gamu"
+            size="large"
+          />
+        </a>
+      </div>
+    </div>
+  </section>
+}

@@ -1,0 +1,73 @@
+<nav class="navbar" [class.navbar--scrolled]="scrolled">
+  <div class="navbar__inner container">
+
+    <!-- Logo -->
+    <a class="navbar__brand" routerLink="/">
+      <!-- Espaço reservado para a logo -->
+      <div class="navbar__logo-placeholder">
+        <span class="navbar__logo-text">GAMU</span>
+      </div>
+    </a>
+
+    <!-- Desktop links -->
+    <ul class="navbar__links">
+      @for (link of navLinks; track link.path) {
+        <li>
+          <a
+            [routerLink]="link.path"
+            routerLinkActive="navbar__link--active"
+            [routerLinkActiveOptions]="{ exact: link.path === '/' }"
+            class="navbar__link"
+          >{{ link.label }}</a>
+        </li>
+      }
+    </ul>
+
+    <!-- CTA Desktop -->
+    <div class="navbar__actions">
+      <a routerLink="/produtos">
+        <p-button
+          label="Ver Produtos"
+          icon="pi pi-shopping-bag"
+          styleClass="p-button-gamu"
+          size="small"
+        />
+      </a>
+    </div>
+
+    <!-- Hamburger mobile -->
+    <button class="navbar__hamburger" (click)="toggleMobileMenu()" aria-label="Menu">
+      <i class="pi" [ngClass]="mobileMenuOpen ? 'pi-times' : 'pi-bars'"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Drawer -->
+<p-drawer
+  [(visible)]="mobileMenuOpen"
+  header=""
+  position="top"
+  styleClass="mobile-drawer"
+>
+  <div class="mobile-nav">
+    <div class="mobile-nav__brand">
+      <span class="navbar__logo-text">GAMU</span>
+    </div>
+    <ul class="mobile-nav__links">
+      @for (link of navLinks; track link.path) {
+        <li>
+          <a
+            [routerLink]="link.path"
+            routerLinkActive="mobile-nav__link--active"
+            [routerLinkActiveOptions]="{ exact: link.path === '/' }"
+            class="mobile-nav__link"
+            (click)="closeMobileMenu()"
+          >
+            <span>{{ link.label }}</span>
+            <i class="pi pi-angle-right"></i>
+          </a>
+        </li>
+      }
+    </ul>
+  </div>
+</p-drawer>

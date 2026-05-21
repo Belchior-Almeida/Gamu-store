@@ -1,0 +1,182 @@
+@use 'primeflex/primeflex.scss';
+@import 'primeicons/primeicons.css';
+
+// ─── Gamu Color Palette ────────────────────────────────────────────────────
+:root {
+  --gamu-gold:       #ada749;
+  --gamu-green:      #283e2a;
+  --gamu-deep-green: #1d2b1d;
+  --gamu-dark:       #0a130e;
+  --gamu-gold-light: #c9c466;
+  --gamu-gold-faint: rgba(173, 167, 73, 0.12);
+  --gamu-text-light: #e8e4c8;
+  --gamu-text-muted: #a0a89c;
+}
+
+// ─── Reset & Base ──────────────────────────────────────────────────────────
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--gamu-dark);
+  color: var(--gamu-text-light);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+// ─── Typography ───────────────────────────────────────────────────────────
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--gamu-text-light);
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2.5rem); }
+h3 { font-size: clamp(1.2rem, 2.5vw, 1.75rem); }
+
+.section-title {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: var(--gamu-gold);
+  position: relative;
+  padding-bottom: 1rem;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--gamu-gold);
+    margin: 0.75rem auto 0;
+    border-radius: 2px;
+  }
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--gamu-text-muted);
+  font-size: 1.1rem;
+  margin-bottom: 3rem;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// ─── Layout helpers ───────────────────────────────────────────────────────
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section {
+  padding: 5rem 0;
+}
+
+.section-dark {
+  background-color: var(--gamu-dark);
+}
+
+.section-green {
+  background-color: var(--gamu-deep-green);
+}
+
+.section-forest {
+  background-color: var(--gamu-green);
+}
+
+// ─── PrimeNG overrides ────────────────────────────────────────────────────
+.p-button-gamu {
+  background-color: var(--gamu-gold) !important;
+  border-color: var(--gamu-gold) !important;
+  color: var(--gamu-dark) !important;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+
+  &:hover {
+    background-color: var(--gamu-gold-light) !important;
+    border-color: var(--gamu-gold-light) !important;
+  }
+}
+
+.p-button-outline-gamu {
+  background-color: transparent !important;
+  border: 2px solid var(--gamu-gold) !important;
+  color: var(--gamu-gold) !important;
+  font-weight: 700;
+
+  &:hover {
+    background-color: var(--gamu-gold-faint) !important;
+  }
+}
+
+.p-card {
+  background-color: var(--gamu-deep-green) !important;
+  border: 1px solid rgba(173, 167, 73, 0.15) !important;
+  color: var(--gamu-text-light) !important;
+  border-radius: 12px !important;
+
+  .p-card-title {
+    color: var(--gamu-gold) !important;
+  }
+}
+
+.p-tag-gamu {
+  background-color: var(--gamu-gold-faint) !important;
+  color: var(--gamu-gold) !important;
+  border: 1px solid rgba(173, 167, 73, 0.3) !important;
+  font-size: 0.75rem !important;
+}
+
+.p-chip-gamu {
+  background-color: var(--gamu-gold-faint) !important;
+  color: var(--gamu-gold) !important;
+}
+
+.p-divider .p-divider-content {
+  background-color: transparent !important;
+}
+
+// ─── Animations ───────────────────────────────────────────────────────────
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+// ─── Scrollbar ────────────────────────────────────────────────────────────
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--gamu-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gamu-green);
+  border-radius: 4px;
+  &:hover { background: var(--gamu-gold); }
+}

@@ -1,0 +1,246 @@
+.page-header {
+  padding: 8rem 0 4rem;
+  background: linear-gradient(135deg, var(--gamu-dark), var(--gamu-deep-green));
+  border-bottom: 1px solid rgba(173, 167, 73, 0.15);
+  text-align: center;
+
+  &__title {
+    color: var(--gamu-gold);
+    margin-bottom: 1rem;
+  }
+
+  &__subtitle {
+    color: var(--gamu-text-muted);
+    font-size: 1.1rem;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}
+
+// ─── Mission / Vision ────────────────────────────────────────────────────────
+.mv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+
+  @media (max-width: 768px) { grid-template-columns: 1fr; }
+}
+
+.mv-card {
+  background: var(--gamu-deep-green);
+  border: 1px solid rgba(173, 167, 73, 0.15);
+  border-radius: 14px;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: border-color 0.25s;
+
+  &:hover { border-color: rgba(173, 167, 73, 0.4); }
+
+  &--vision {
+    background: var(--gamu-green);
+  }
+
+  &__icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: var(--gamu-gold-faint);
+    border: 1px solid rgba(173, 167, 73, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i { font-size: 1.5rem; color: var(--gamu-gold); }
+  }
+
+  &__title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--gamu-gold);
+  }
+
+  &__text {
+    color: var(--gamu-text-muted);
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+}
+
+// ─── Values ──────────────────────────────────────────────────────────────────
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+
+  @media (max-width: 1024px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 640px)  { grid-template-columns: 1fr; }
+}
+
+.value-card {
+  background: var(--gamu-deep-green);
+  border: 1px solid rgba(173, 167, 73, 0.15);
+  border-radius: 14px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: center;
+  align-items: center;
+  transition: transform 0.25s, border-color 0.25s;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: rgba(173, 167, 73, 0.4);
+  }
+
+  &__icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--gamu-gold-faint);
+    border: 2px solid rgba(173, 167, 73, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i { font-size: 1.5rem; color: var(--gamu-gold); }
+  }
+
+  &__title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gamu-text-light);
+  }
+
+  &__text {
+    font-size: 0.875rem;
+    color: var(--gamu-text-muted);
+    line-height: 1.6;
+  }
+}
+
+// ─── Team ────────────────────────────────────────────────────────────────────
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+
+  @media (max-width: 1024px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 640px)  { grid-template-columns: 1fr; }
+}
+
+.team-card {
+  background: var(--gamu-deep-green);
+  border: 1px solid rgba(173, 167, 73, 0.15);
+  border-radius: 14px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+  transition: transform 0.25s, border-color 0.25s;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: rgba(173, 167, 73, 0.4);
+  }
+
+  &__avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: var(--gamu-green);
+    border: 3px solid rgba(173, 167, 73, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    i { font-size: 2.5rem; color: rgba(173, 167, 73, 0.3); }
+  }
+
+  &__avatar-note {
+    font-size: 0.55rem;
+    color: var(--gamu-text-muted);
+    position: absolute;
+    bottom: -18px;
+    font-style: italic;
+    white-space: nowrap;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  &__name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gamu-gold);
+  }
+
+  &__role {
+    font-size: 0.8rem;
+    color: var(--gamu-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+
+  &__bio {
+    font-size: 0.875rem;
+    color: var(--gamu-text-muted);
+    line-height: 1.6;
+  }
+}
+
+// ─── Contact Banner ──────────────────────────────────────────────────────────
+.contact-banner {
+  background: linear-gradient(135deg, var(--gamu-deep-green), var(--gamu-green));
+  border: 1px solid rgba(173, 167, 73, 0.2);
+  border-radius: 16px;
+  padding: 4rem;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 3rem;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+
+  &__text {
+    h2 { color: var(--gamu-gold); margin-bottom: 0.5rem; }
+    p  { color: var(--gamu-text-muted); font-size: 1rem; }
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__actions {
+    flex-shrink: 0;
+  }
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--gamu-text-muted);
+  font-size: 0.9rem;
+
+  i { color: var(--gamu-gold); }
+
+  @media (max-width: 1024px) { justify-content: center; }
+}

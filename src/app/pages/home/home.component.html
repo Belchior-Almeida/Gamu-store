@@ -1,0 +1,172 @@
+<!-- ─── Hero ──────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero__overlay"></div>
+  <div class="hero__content container">
+
+    <!-- Espaço reservado para logo principal -->
+    <div class="hero__logo-placeholder">
+      <div class="hero__logo-box">
+        <span class="hero__logo-text">GAMU</span>
+        <span class="hero__logo-sub">Amazônia</span>
+      </div>
+      <p class="hero__logo-note">[ Insira sua logo aqui ]</p>
+    </div>
+
+    <h1 class="hero__title animate-fade-in-up">
+      O sabor genuíno<br>
+      <span class="hero__title-accent">da Amazônia</span>
+    </h1>
+
+    <p class="hero__subtitle animate-fade-in-up">
+      Superfrutas nativas colhidas com respeito à floresta, levadas
+      diretamente das comunidades amazônicas para a sua mesa.
+    </p>
+
+    <div class="hero__actions animate-fade-in-up">
+      <a routerLink="/produtos">
+        <p-button
+          label="Explorar Produtos"
+          icon="pi pi-arrow-right"
+          iconPos="right"
+          styleClass="p-button-gamu hero__cta-primary"
+          size="large"
+        />
+      </a>
+      <a routerLink="/historia">
+        <p-button
+          label="Nossa História"
+          icon="pi pi-book"
+          styleClass="p-button-outline-gamu hero__cta-secondary"
+          size="large"
+        />
+      </a>
+    </div>
+  </div>
+
+  <div class="hero__scroll-indicator">
+    <i class="pi pi-angle-double-down"></i>
+  </div>
+</section>
+
+<!-- ─── Stats ─────────────────────────────────────────────────────────────── -->
+<section class="stats section-green">
+  <div class="container">
+    <div class="stats__grid">
+      @for (stat of stats; track stat.label) {
+        <div class="stats__item">
+          <span class="stats__value">{{ stat.value }}</span>
+          <span class="stats__label">{{ stat.label }}</span>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ─── Highlights ────────────────────────────────────────────────────────── -->
+<section class="highlights section section-dark">
+  <div class="container">
+    <h2 class="section-title">Por que Gamu?</h2>
+    <p class="section-subtitle">
+      Muito além de produtos — somos um movimento de preservação e valorização da maior floresta tropical do mundo.
+    </p>
+    <div class="highlights__grid">
+      @for (item of highlights; track item.title) {
+        <div class="highlights__card">
+          <div class="highlights__icon">
+            <i [class]="item.icon"></i>
+          </div>
+          <h3 class="highlights__title">{{ item.title }}</h3>
+          <p class="highlights__text">{{ item.text }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ─── Featured Products ─────────────────────────────────────────────────── -->
+<section class="featured section section-forest">
+  <div class="container">
+    <h2 class="section-title">Destaques da Floresta</h2>
+    <p class="section-subtitle">
+      Conheça nossos produtos mais amados — superfrutas amazônicas com sabores únicos e propriedades excepcionais.
+    </p>
+
+    <div class="featured__grid">
+      @for (product of featuredProducts; track product.id) {
+        <div class="product-card">
+          <div class="product-card__image-area">
+            <div class="product-card__image-placeholder">
+              <i class="pi pi-image"></i>
+              <span>{{ product.name }}</span>
+            </div>
+            <span class="product-card__category">{{ product.category }}</span>
+          </div>
+          <div class="product-card__body">
+            <h3 class="product-card__name">{{ product.name }}</h3>
+            <p class="product-card__description">{{ product.description | slice:0:100 }}...</p>
+            <div class="product-card__tags">
+              @for (tag of product.tags.slice(0, 2); track tag) {
+                <p-tag [value]="tag" styleClass="p-tag-gamu" />
+              }
+            </div>
+            <div class="product-card__footer">
+              <span class="product-card__price">
+                R$ {{ product.price | number:'1.2-2' }}<small>/{{ product.unit }}</small>
+              </span>
+              <a [routerLink]="['/produtos']">
+                <p-button
+                  label="Ver"
+                  icon="pi pi-eye"
+                  styleClass="p-button-gamu"
+                  size="small"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="featured__cta">
+      <a routerLink="/produtos">
+        <p-button
+          label="Ver Todos os Produtos"
+          icon="pi pi-arrow-right"
+          iconPos="right"
+          styleClass="p-button-outline-gamu"
+          size="large"
+        />
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA Banner ───────────────────────────────────────────────────────── -->
+<section class="cta-banner section section-dark">
+  <div class="container">
+    <div class="cta-banner__inner">
+      <div class="cta-banner__text">
+        <h2>Conheça nossa história</h2>
+        <p>Descubra como a Gamu surgiu e qual o nosso papel na preservação da Amazônia e no futuro das comunidades da floresta.</p>
+      </div>
+      <div class="cta-banner__actions">
+        <a routerLink="/quem-somos">
+          <p-button
+            label="Quem Somos"
+            icon="pi pi-users"
+            styleClass="p-button-gamu"
+            size="large"
+          />
+        </a>
+        <a routerLink="/historia">
+          <p-button
+            label="História da Fruta"
+            icon="pi pi-book"
+            styleClass="p-button-outline-gamu"
+            size="large"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

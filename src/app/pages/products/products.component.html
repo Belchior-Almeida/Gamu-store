@@ -1,0 +1,187 @@
+<!-- ─── Page Header ──────────────────────────────────────────────────────── -->
+<section class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">Nossos Produtos</h1>
+    <p class="page-header__subtitle">
+      Superfrutas amazônicas selecionadas com cuidado — da floresta para você.
+    </p>
+  </div>
+</section>
+
+<!-- ─── Filters ──────────────────────────────────────────────────────────── -->
+<section class="filters-bar section-green">
+  <div class="container">
+    <div class="filters-bar__inner">
+
+      <!-- Search -->
+      <p-iconfield class="filters-bar__search">
+        <p-inputicon styleClass="pi pi-search" />
+        <input
+          pInputText
+          type="text"
+          placeholder="Buscar produto, categoria ou tag..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchChange()"
+          class="filters-bar__input"
+        />
+      </p-iconfield>
+
+      <!-- Category Filter -->
+      <p-select
+        [options]="categories"
+        [(ngModel)]="selectedCategory"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Categoria"
+        styleClass="filters-bar__select"
+        (onChange)="onCategoryChange()"
+      />
+
+      <!-- View Toggle -->
+      <p-selectbutton
+        [options]="viewOptions"
+        [(ngModel)]="viewMode"
+        optionValue="value"
+        styleClass="filters-bar__view-toggle"
+      >
+        <ng-template let-item pTemplate="item">
+          <i [class]="item.icon"></i>
+        </ng-template>
+      </p-selectbutton>
+
+      <!-- Results count -->
+      <span class="filters-bar__count">
+        {{ filteredProducts.length }} produto{{ filteredProducts.length !== 1 ? 's' : '' }}
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Products Content ─────────────────────────────────────────────────── -->
+<section class="products-content section section-dark">
+  <div class="container">
+
+    <!-- Grid View -->
+    @if (viewMode === 'grid') {
+      @if (filteredProducts.length === 0) {
+        <div class="empty-state">
+          <i class="pi pi-search empty-state__icon"></i>
+          <h3>Nenhum produto encontrado</h3>
+          <p>Tente ajustar os filtros de busca.</p>
+        </div>
+      } @else {
+        <div class="products-grid">
+          @for (product of filteredProducts; track product.id) {
+            <div class="product-card">
+              <div class="product-card__image-area">
+                <div class="product-card__image-placeholder">
+                  <i class="pi pi-image"></i>
+                </div>
+                <span class="product-card__category">{{ product.category }}</span>
+                @if (product.featured) {
+                  <span class="product-card__badge">Destaque</span>
+                }
+              </div>
+              <div class="product-card__body">
+                <h3 class="product-card__name">{{ product.name }}</h3>
+                <p class="product-card__description">{{ product.description }}</p>
+
+                <div class="product-card__nutrients">
+                  @for (n of product.nutritionalHighlights; track n) {
+                    <span class="nutrient-badge">{{ n }}</span>
+                  }
+                </div>
+
+                <div class="product-card__tags">
+                  @for (tag of product.tags; track tag) {
+                    <p-tag [value]="tag" styleClass="p-tag-gamu" />
+                  }
+                </div>
+
+                <div class="product-card__footer">
+                  <div>
+                    <span class="product-card__price">
+                      R$ {{ product.price | number:'1.2-2' }}
+                    </span>
+                    <span class="product-card__unit">/ {{ product.unit }}</span>
+                  </div>
+                  <span class="product-card__stock"
+                    [class.product-card__stock--low]="product.stock < 50">
+                    <i class="pi pi-box"></i> {{ product.stock }} em estoque
+                  </span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    }
+
+    <!-- Table View -->
+    @if (viewMode === 'table') {
+      <p-table
+        [value]="filteredProducts"
+        [paginator]="true"
+        [rows]="5"
+        styleClass="products-table"
+        responsiveLayout="scroll"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Produto</th>
+            <th>Categoria</th>
+            <th>Preço</th>
+            <th>Unidade</th>
+            <th>Estoque</th>
+            <th>Destaques Nutricionais</th>
+            <th>Tags</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+          <tr>
+            <td>
+              <div class="table-product-name">
+                <strong>{{ product.name }}</strong>
+                @if (product.featured) {
+                  <span class="featured-dot" title="Destaque"></span>
+                }
+              </div>
+            </td>
+            <td>
+              <span class="category-chip">{{ product.category }}</span>
+            </td>
+            <td>
+              <strong class="price-cell">R$ {{ product.price | number:'1.2-2' }}</strong>
+            </td>
+            <td>{{ product.unit }}</td>
+            <td>
+              <span [class.low-stock]="product.stock < 50">
+                {{ product.stock }}
+              </span>
+            </td>
+            <td>
+              <div class="nutrient-chips">
+                @for (n of product.nutritionalHighlights; track n) {
+                  <span class="nutrient-badge nutrient-badge--sm">{{ n }}</span>
+                }
+              </div>
+            </td>
+            <td>
+              <div class="tag-chips">
+                @for (tag of product.tags; track tag) {
+                  <p-tag [value]="tag" styleClass="p-tag-gamu" />
+                }
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="7" class="table-empty">Nenhum produto encontrado.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    }
+
+  </div>
+</section>

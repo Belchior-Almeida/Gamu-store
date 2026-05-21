@@ -1,0 +1,282 @@
+.page-header {
+  padding: 8rem 0 4rem;
+  background: linear-gradient(135deg, var(--gamu-dark), var(--gamu-deep-green));
+  border-bottom: 1px solid rgba(173, 167, 73, 0.15);
+  text-align: center;
+
+  &__title { color: var(--gamu-gold); margin-bottom: 1rem; }
+  &__subtitle {
+    color: var(--gamu-text-muted);
+    font-size: 1.05rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+}
+
+// ─── Amazon Intro ────────────────────────────────────────────────────────────
+.amazon-intro {
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  text-align: center;
+
+  &__text {
+    font-size: 1.1rem;
+    color: var(--gamu-text-muted);
+    line-height: 1.8;
+    font-style: italic;
+    padding: 2rem;
+    background: var(--gamu-gold-faint);
+    border-left: 4px solid var(--gamu-gold);
+    border-radius: 0 10px 10px 0;
+    text-align: left;
+  }
+}
+
+// ─── Importance Grid ─────────────────────────────────────────────────────────
+.importance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+
+  @media (max-width: 768px) { grid-template-columns: 1fr; }
+}
+
+.importance-card {
+  background: var(--gamu-deep-green);
+  border: 1px solid rgba(173, 167, 73, 0.15);
+  border-radius: 14px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: transform 0.25s, border-color 0.25s;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: rgba(173, 167, 73, 0.4);
+  }
+
+  &__icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 12px;
+    background: var(--gamu-gold-faint);
+    border: 1px solid rgba(173, 167, 73, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i { font-size: 1.4rem; color: var(--gamu-gold); }
+  }
+
+  &__title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--gamu-gold);
+  }
+
+  &__text {
+    font-size: 0.9rem;
+    color: var(--gamu-text-muted);
+    line-height: 1.7;
+  }
+}
+
+// ─── Company Timeline ────────────────────────────────────────────────────────
+.company-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.timeline-event {
+  display: grid;
+  grid-template-columns: 80px 40px 1fr;
+  gap: 0 1.5rem;
+  min-height: 100px;
+
+  &:last-child .timeline-event__line {
+    display: none;
+  }
+
+  &__year-col {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding-top: 0.25rem;
+  }
+
+  &__year {
+    font-size: 1rem;
+    font-weight: 900;
+    color: var(--gamu-gold);
+    background: var(--gamu-gold-faint);
+    border: 1px solid rgba(173, 167, 73, 0.3);
+    border-radius: 6px;
+    padding: 0.25rem 0.5rem;
+    white-space: nowrap;
+  }
+
+  &__connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  &__dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--gamu-gold);
+    flex-shrink: 0;
+    margin-top: 5px;
+    box-shadow: 0 0 0 5px rgba(173, 167, 73, 0.15);
+  }
+
+  &__line {
+    flex: 1;
+    width: 2px;
+    background: rgba(173, 167, 73, 0.2);
+    margin-top: 4px;
+    margin-bottom: 0;
+  }
+
+  &__content {
+    background: var(--gamu-deep-green);
+    border: 1px solid rgba(173, 167, 73, 0.15);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: border-color 0.25s;
+
+    &:hover { border-color: rgba(173, 167, 73, 0.35); }
+  }
+
+  &__title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gamu-text-light);
+    margin-bottom: 0.5rem;
+  }
+
+  &__description {
+    font-size: 0.875rem;
+    color: var(--gamu-text-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+}
+
+// ─── Accordion ───────────────────────────────────────────────────────────────
+:host ::ng-deep .fruits-accordion {
+  .p-accordion-panel {
+    border: 1px solid rgba(173, 167, 73, 0.15) !important;
+    border-radius: 10px !important;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+
+    &.p-accordion-panel-active {
+      border-color: rgba(173, 167, 73, 0.35) !important;
+    }
+  }
+
+  .p-accordion-header-link {
+    background: var(--gamu-deep-green) !important;
+    color: var(--gamu-text-light) !important;
+    border: none !important;
+    padding: 1.25rem 1.5rem !important;
+    border-radius: 0 !important;
+    transition: background 0.2s !important;
+
+    &:hover { background: var(--gamu-green) !important; }
+  }
+
+  .p-accordion-content {
+    background: var(--gamu-dark) !important;
+    border: none !important;
+    padding: 1.5rem !important;
+  }
+}
+
+.accordion-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  color: var(--gamu-gold);
+
+  i { color: var(--gamu-gold); }
+}
+
+.fruit-content {
+  p {
+    color: var(--gamu-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    &:last-of-type { margin-bottom: 0; }
+  }
+  em { color: var(--gamu-gold-light); font-style: italic; }
+}
+
+.fruit-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(173, 167, 73, 0.1);
+}
+
+.fruit-fact {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--gamu-gold-faint);
+  border: 1px solid rgba(173, 167, 73, 0.2);
+  border-radius: 20px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.8rem;
+  color: var(--gamu-text-muted);
+
+  i { color: var(--gamu-gold); font-size: 0.8rem; }
+}
+
+// ─── History CTA ─────────────────────────────────────────────────────────────
+.history-cta {
+  background: linear-gradient(135deg, var(--gamu-deep-green), var(--gamu-green));
+  border: 1px solid rgba(173, 167, 73, 0.2);
+  border-radius: 16px;
+  padding: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    text-align: center;
+    padding: 2.5rem 2rem;
+  }
+
+  &__text {
+    flex: 1;
+    h2 { color: var(--gamu-gold); margin-bottom: 0.75rem; }
+    p  { color: var(--gamu-text-muted); font-size: 1rem; line-height: 1.6; max-width: 480px; }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+
+    @media (max-width: 768px) { justify-content: center; }
+  }
+}

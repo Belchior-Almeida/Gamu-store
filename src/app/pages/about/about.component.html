@@ -1,0 +1,109 @@
+<!-- ─── Page Header ──────────────────────────────────────────────────────── -->
+<section class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">Quem Somos</h1>
+    <p class="page-header__subtitle">
+      Conheça a Gamu — nossa história, missão e as pessoas por trás do propósito.
+    </p>
+  </div>
+</section>
+
+@if (company) {
+  <!-- ─── Mission / Vision ────────────────────────────────────────────────── -->
+  <section class="section section-dark">
+    <div class="container">
+      <div class="mv-grid">
+        <div class="mv-card">
+          <div class="mv-card__icon"><i class="pi pi-bullseye"></i></div>
+          <h3 class="mv-card__title">Nossa Missão</h3>
+          <p class="mv-card__text">{{ company.mission }}</p>
+        </div>
+        <div class="mv-card mv-card--vision">
+          <div class="mv-card__icon"><i class="pi pi-eye"></i></div>
+          <h3 class="mv-card__title">Nossa Visão</h3>
+          <p class="mv-card__text">{{ company.vision }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Values ─────────────────────────────────────────────────────────── -->
+  <section class="section section-forest">
+    <div class="container">
+      <h2 class="section-title">Nossos Valores</h2>
+      <p class="section-subtitle">Os princípios que guiam cada decisão que tomamos.</p>
+      <div class="values-grid">
+        @for (value of company.values; track value.title) {
+          <div class="value-card">
+            <div class="value-card__icon">
+              <i [class]="value.icon"></i>
+            </div>
+            <h3 class="value-card__title">{{ value.title }}</h3>
+            <p class="value-card__text">{{ value.text }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Team ───────────────────────────────────────────────────────────── -->
+  <section class="section section-green">
+    <div class="container">
+      <h2 class="section-title">Nossa Equipe</h2>
+      <p class="section-subtitle">
+        As pessoas que dedicam suas vidas a conectar o mundo com o melhor da Amazônia.
+      </p>
+      <div class="team-grid">
+        @for (member of company.team; track member.name) {
+          <div class="team-card">
+            <div class="team-card__avatar">
+              <i class="pi pi-user"></i>
+              <span class="team-card__avatar-note">[ foto ]</span>
+            </div>
+            <div class="team-card__info">
+              <h3 class="team-card__name">{{ member.name }}</h3>
+              <span class="team-card__role">{{ member.role }}</span>
+              <p class="team-card__bio">{{ member.bio }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Contact ────────────────────────────────────────────────────────── -->
+  <section class="section section-dark">
+    <div class="container">
+      <div class="contact-banner">
+        <div class="contact-banner__text">
+          <h2>Vamos conversar?</h2>
+          <p>Entre em contato e saiba mais sobre nossos produtos e parcerias.</p>
+        </div>
+        <div class="contact-banner__details">
+          <div class="contact-item">
+            <i class="pi pi-envelope"></i>
+            <span>{{ company.contact.email }}</span>
+          </div>
+          <div class="contact-item">
+            <i class="pi pi-phone"></i>
+            <span>{{ company.contact.phone }}</span>
+          </div>
+          <div class="contact-item">
+            <i class="pi pi-map-marker"></i>
+            <span>{{ company.contact.address }}</span>
+          </div>
+        </div>
+        <div class="contact-banner__actions">
+          <a routerLink="/produtos">
+            <p-button
+              label="Ver Produtos"
+              icon="pi pi-shopping-bag"
+              styleClass="p-button-gamu"
+              size="large"
+            />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+}

@@ -1,0 +1,175 @@
+{
+  "name": "Gamu",
+  "tagline": "O sabor genuíno da Amazônia",
+  "description": "Da floresta para sua mesa, levamos os melhores produtos amazônicos com respeito à natureza e valorização dos povos da floresta.",
+  "founded": 2018,
+  "mission": "Conectar o mundo às riquezas naturais da Amazônia, promovendo sustentabilidade, comércio justo e a valorização da biodiversidade.",
+  "vision": "Ser referência global em produtos amazônicos de alta qualidade, contribuindo para a preservação da floresta e o desenvolvimento das comunidades locais.",
+  "values": [
+    {
+      "icon": "pi pi-leaf",
+      "title": "Sustentabilidade",
+      "text": "Toda nossa cadeia produtiva respeita os ciclos naturais da floresta e garante a regeneração dos recursos."
+    },
+    {
+      "icon": "pi pi-users",
+      "title": "Comunidade",
+      "text": "Trabalhamos em parceria com comunidades ribeirinhas e indígenas, garantindo comércio justo e dignidade."
+    },
+    {
+      "icon": "pi pi-verified",
+      "title": "Qualidade",
+      "text": "Nossos produtos passam por rigorosos controles de qualidade, garantindo pureza e máximo valor nutricional."
+    },
+    {
+      "icon": "pi pi-heart",
+      "title": "Propósito",
+      "text": "Acreditamos que consumir produtos amazônicos é um ato de preservação ambiental e apoio a quem cuida da floresta."
+    }
+  ],
+  "team": [
+    {
+      "name": "Ana Beatriz Lima",
+      "role": "Fundadora & CEO",
+      "bio": "Bióloga com 15 anos de experiência em etnobotânica amazônica.",
+      "image": "assets/images/team/ana.jpg"
+    },
+    {
+      "name": "Carlos Mendes",
+      "role": "Diretor de Operações",
+      "bio": "Engenheiro agrônomo especializado em cadeia produtiva sustentável.",
+      "image": "assets/images/team/carlos.jpg"
+    },
+    {
+      "name": "Mariana Souza",
+      "role": "Head de Qualidade",
+      "bio": "Nutricionista e pesquisadora de alimentos funcionais amazônicos.",
+      "image": "assets/images/team/mariana.jpg"
+    }
+  ],
+  "production": {
+    "stages": [
+      {
+        "step": 1,
+        "icon": "pi pi-map-marker",
+        "title": "Colheita Sustentável",
+        "description": "Nossos coletores, treinados e certificados, realizam a colheita manual respeitando os ciclos naturais de cada fruta, garantindo a regeneração da floresta."
+      },
+      {
+        "step": 2,
+        "icon": "pi pi-truck",
+        "title": "Logística Cuidadosa",
+        "description": "A cadeia fria mantém as frutas frescas desde a floresta até nosso centro de processamento, preservando ao máximo os nutrientes."
+      },
+      {
+        "step": 3,
+        "icon": "pi pi-cog",
+        "title": "Processamento",
+        "description": "Tecnologia moderna combinada com técnicas artesanais tradicionais para extrair polpas, óleos e pós sem aditivos químicos."
+      },
+      {
+        "step": 4,
+        "icon": "pi pi-check-circle",
+        "title": "Controle de Qualidade",
+        "description": "Laboratório próprio realiza análises físico-químicas e microbiológicas em cada lote, garantindo pureza e segurança alimentar."
+      },
+      {
+        "step": 5,
+        "icon": "pi pi-box",
+        "title": "Embalagem",
+        "description": "Embalagens sustentáveis, recicláveis ou biodegradáveis, que protegem o produto e comunicam a identidade da floresta."
+      },
+      {
+        "step": 6,
+        "icon": "pi pi-send",
+        "title": "Entrega",
+        "description": "Distribuição para todo o Brasil com rastreabilidade completa, da origem ao consumidor final."
+      }
+    ],
+    "certifications": [
+      "Orgânico Brasil – Ministério da Agricultura",
+      "Fair Trade Certified",
+      "Rainforest Alliance",
+      "ANVISA – Registro de Alimentos"
+    ],
+    "partners": [
+      "Comunidade Ribeirinha do Tapajós",
+      "Associação dos Extrativistas do Alto Solimões",
+      "Cooperativa de Agricultores do Marajó"
+    ]
+  },
+  "history": {
+    "timeline": [
+      {
+        "year": 2018,
+        "title": "Fundação da Gamu",
+        "description": "Ana Beatriz, após anos de pesquisa no interior do Amazonas, funda a Gamu com a missão de levar os superalimentos amazônicos ao mercado nacional."
+      },
+      {
+        "year": 2019,
+        "title": "Primeiras Parcerias",
+        "description": "Firmamos os primeiros acordos de comércio justo com três comunidades ribeirinhas, garantindo renda digna a 45 famílias."
+      },
+      {
+        "year": 2020,
+        "title": "Certificações e Expansão",
+        "description": "Obtemos as certificações orgânica e Fair Trade. Expandimos nosso catálogo para 8 produtos e iniciamos vendas online."
+      },
+      {
+        "year": 2021,
+        "title": "Reconhecimento Nacional",
+        "description": "Gamu é eleita uma das melhores empresas de bioeconomia do Brasil pela Fundação Amazônia Sustentável."
+      },
+      {
+        "year": 2022,
+        "title": "Centro de Processamento",
+        "description": "Inauguramos nosso centro de processamento em Santarém-PA, gerando 30 empregos diretos na região."
+      },
+      {
+        "year": 2023,
+        "title": "Mercado Internacional",
+        "description": "Iniciamos exportações para Portugal, Alemanha e Japão, levando os sabores amazônicos ao mundo."
+      },
+      {
+        "year": 2024,
+        "title": "Impacto Social",
+        "description": "Mais de 200 famílias beneficiadas, 5.000 hectares de floresta protegidos e R$ 2M distribuídos às comunidades."
+      }
+    ],
+    "amazonianFruits": {
+      "intro": "A Amazônia abriga a maior biodiversidade do planeta. Com mais de 30.000 espécies de plantas, a floresta é um verdadeiro celeiro de alimentos e medicamentos ainda pouco explorados pelo mundo.",
+      "importance": [
+        {
+          "title": "Biodiversidade Única",
+          "text": "A bacia amazônica concentra 10% de todas as espécies vegetais do planeta. Suas frutas evoluíram por milhões de anos, desenvolvendo compostos bioativos sem equivalente no mundo.",
+          "icon": "pi pi-globe"
+        },
+        {
+          "title": "Povos da Floresta",
+          "text": "Por séculos, povos indígenas e ribeirinhos desenvolveram conhecimento profundo sobre as propriedades medicinais e nutricionais dessas frutas, um patrimônio cultural imenso.",
+          "icon": "pi pi-users"
+        },
+        {
+          "title": "Nutrição Funcional",
+          "text": "Frutas como açaí, camu-camu e buriti possuem concentrações de vitaminas, antioxidantes e ácidos graxos muito superiores às frutas convencionais, funcionando como verdadeiros superalimentos.",
+          "icon": "pi pi-heart"
+        },
+        {
+          "title": "Economia Sustentável",
+          "text": "O manejo sustentável de frutas nativas é economicamente mais rentável que o desmatamento, sendo um argumento concreto para a preservação da floresta em pé.",
+          "icon": "pi pi-chart-line"
+        }
+      ]
+    }
+  },
+  "contact": {
+    "email": "contato@gamu.com.br",
+    "phone": "+55 (93) 9999-0000",
+    "address": "Av. Marechal Rondon, 1500 – Santarém, Pará – Brasil",
+    "social": {
+      "instagram": "@gamuamazonia",
+      "facebook": "GamuAmazonia",
+      "linkedin": "gamu-amazonia"
+    }
+  }
+}

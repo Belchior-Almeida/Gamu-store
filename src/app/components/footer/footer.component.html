@@ -1,0 +1,84 @@
+<footer class="footer">
+  <div class="footer__main container">
+    <div class="footer__grid">
+
+      <!-- Brand -->
+      <div class="footer__brand">
+        <div class="footer__logo-placeholder">
+          <span class="footer__logo-text">GAMU</span>
+        </div>
+        <p class="footer__tagline">O sabor genuíno da Amazônia</p>
+        <p class="footer__description">
+          Da floresta para sua mesa — produtos amazônicos com respeito à natureza
+          e valorização dos povos da floresta.
+        </p>
+        <div class="footer__social">
+          <a href="#" class="footer__social-link" aria-label="Instagram">
+            <i class="pi pi-instagram"></i>
+          </a>
+          <a href="#" class="footer__social-link" aria-label="Facebook">
+            <i class="pi pi-facebook"></i>
+          </a>
+          <a href="#" class="footer__social-link" aria-label="LinkedIn">
+            <i class="pi pi-linkedin"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="footer__section">
+        <h4 class="footer__section-title">Navegação</h4>
+        <ul class="footer__links">
+          @for (link of navLinks; track link.path) {
+            <li>
+              <a [routerLink]="link.path" class="footer__link">{{ link.label }}</a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="footer__section">
+        <h4 class="footer__section-title">Contato</h4>
+        <ul class="footer__contact-list">
+          <li>
+            <i class="pi pi-envelope"></i>
+            <span>contato&#64;gamu.com.br</span>
+          </li>
+          <li>
+            <i class="pi pi-phone"></i>
+            <span>+55 (93) 9999-0000</span>
+          </li>
+          <li>
+            <i class="pi pi-map-marker"></i>
+            <span>Santarém, Pará – Brasil</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Certifications -->
+      <div class="footer__section">
+        <h4 class="footer__section-title">Certificações</h4>
+        <ul class="footer__cert-list">
+          <li><i class="pi pi-check-circle"></i> Orgânico Brasil</li>
+          <li><i class="pi pi-check-circle"></i> Fair Trade Certified</li>
+          <li><i class="pi pi-check-circle"></i> Rainforest Alliance</li>
+          <li><i class="pi pi-check-circle"></i> ANVISA</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <p-divider styleClass="footer-divider" />
+
+  <div class="footer__bottom container">
+    <p class="footer__copy">
+      &copy; {{ currentYear }} Gamu Amazônia. Todos os direitos reservados.
+    </p>
+    <p class="footer__made">
+      Feito com <i class="pi pi-heart" style="color: var(--gamu-gold)"></i>
+      pela floresta e para quem ama a natureza.
+    </p>
+  </div>
+</footer>

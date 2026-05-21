@@ -1,0 +1,202 @@
+.page-header {
+  padding: 8rem 0 4rem;
+  background: linear-gradient(135deg, var(--gamu-dark), var(--gamu-deep-green));
+  border-bottom: 1px solid rgba(173, 167, 73, 0.15);
+  text-align: center;
+
+  &__title { color: var(--gamu-gold); margin-bottom: 1rem; }
+  &__subtitle {
+    color: var(--gamu-text-muted);
+    font-size: 1.1rem;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}
+
+// ─── Steps Grid ──────────────────────────────────────────────────────────────
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+
+  @media (max-width: 1024px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 640px)  { grid-template-columns: 1fr; }
+}
+
+.step-card {
+  background: var(--gamu-deep-green);
+  border: 1px solid rgba(173, 167, 73, 0.15);
+  border-radius: 14px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: relative;
+  transition: transform 0.25s, border-color 0.25s;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: rgba(173, 167, 73, 0.4);
+  }
+
+  &__number {
+    position: absolute;
+    top: -14px;
+    left: 1.5rem;
+    width: 28px;
+    height: 28px;
+    background: var(--gamu-gold);
+    color: var(--gamu-dark);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 900;
+  }
+
+  &__icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: var(--gamu-gold-faint);
+    border: 1px solid rgba(173, 167, 73, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.5rem;
+
+    i { font-size: 1.3rem; color: var(--gamu-gold); }
+  }
+
+  &__title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gamu-text-light);
+  }
+
+  &__description {
+    font-size: 0.875rem;
+    color: var(--gamu-text-muted);
+    line-height: 1.6;
+  }
+}
+
+// ─── PrimeNG Timeline ────────────────────────────────────────────────────────
+:host ::ng-deep .production-timeline {
+  .p-timeline-event-connector {
+    background-color: rgba(173, 167, 73, 0.25) !important;
+    width: 2px !important;
+  }
+}
+
+.timeline-marker {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--gamu-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 6px rgba(173, 167, 73, 0.15);
+
+  i { font-size: 1.1rem; color: var(--gamu-dark); }
+}
+
+.timeline-card {
+  background: var(--gamu-deep-green);
+  border: 1px solid rgba(173, 167, 73, 0.15);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+
+  &__step {
+    font-size: 0.7rem;
+    color: var(--gamu-gold);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  &__title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gamu-text-light);
+    margin-bottom: 0.5rem;
+  }
+
+  &__text {
+    font-size: 0.85rem;
+    color: var(--gamu-text-muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+}
+
+// ─── Certifications ──────────────────────────────────────────────────────────
+.cert-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+.cert-section {
+  &__subtitle {
+    color: var(--gamu-text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+}
+
+.cert-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cert-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--gamu-deep-green);
+  border: 1px solid rgba(173, 167, 73, 0.15);
+  border-radius: 8px;
+  padding: 0.9rem 1.25rem;
+  font-size: 0.9rem;
+  color: var(--gamu-text-light);
+  transition: border-color 0.2s, background 0.2s;
+
+  &:hover {
+    border-color: rgba(173, 167, 73, 0.3);
+    background: var(--gamu-gold-faint);
+  }
+
+  i { color: var(--gamu-gold); font-size: 1rem; flex-shrink: 0; }
+}
+
+// ─── Production CTA ──────────────────────────────────────────────────────────
+.production-cta {
+  background: linear-gradient(135deg, var(--gamu-deep-green), var(--gamu-green));
+  border: 1px solid rgba(173, 167, 73, 0.2);
+  border-radius: 16px;
+  padding: 4rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+
+  @media (max-width: 640px) { padding: 2.5rem 1.5rem; }
+
+  h2 { color: var(--gamu-gold); }
+  p  { color: var(--gamu-text-muted); font-size: 1rem; max-width: 480px; line-height: 1.6; }
+}
