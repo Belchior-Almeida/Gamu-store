@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CamuGum — Dashboard Amazônico</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:#f5f5f0;
+  color:var(--texto);
+  font-size:.9375rem;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+:root{
+  --verde:#1a7a45;
+  --verde-claro:#e8f5ee;
+  --verde-med:#2ea05c;
+  --laranja:#d4621a;
+  --laranja-claro:#fdf0e8;
+  --azul:#1a4d7a;
+  --azul-claro:#e8f0f8;
+  --roxo:#5c3d9e;
+  --roxo-claro:#f0ecfb;
+  --amarelo:#c48a00;
+  --amarelo-claro:#fdf6e3;
+  --cinza-100:#f5f5f0;
+  --cinza-200:#ebebe6;
+  --cinza-300:#d4d4ce;
+  --texto:#1a1a1a;
+  --texto-sec:#4a4a44;
+  --texto-suave:#5c5c56;
+  --texto-label:#6b6b64;
+  --cinza-400:var(--texto-suave);
+  --cinza-700:#3d3d38;
+  --branco:#ffffff;
+  --borda:#e0e0da;
+  --sombra:0 1px 3px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.04);
+  --sombra-hover:0 4px 16px rgba(0,0,0,.10);
+  --r:8px;
+}
+nav{
+  position:fixed;top:0;left:0;right:0;
+  height:56px;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--borda);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;
+  z-index:1000;
+}
+.nav-brand{display:flex;align-items:center;gap:10px;}
+.nav-logo{
+  width:28px;height:28px;
+  background:var(--verde);
+  border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.nav-logo svg{width:16px;height:16px;fill:#fff}
+.nav-brand-name{
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;
+  color:var(--texto);
+  letter-spacing:-.3px;
+}
+.nav-brand-name span{color:var(--verde)}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{
+  padding:6px 14px;
+  border-radius:6px;
+  font-size:.8125rem;
+  font-weight:500;
+  color:var(--texto-sec);
+  cursor:pointer;
+  transition:all .2s;
+  border:none;background:none;
+  text-decoration:none;
+}
+.nav-link:hover{color:var(--texto);background:var(--cinza-100)}
+.nav-link.active{color:var(--verde);background:var(--verde-claro);font-weight:600;}
+.nav-badge{
+  font-family:'DM Mono',monospace;
+  font-size:.68rem;
+  background:var(--verde-claro);
+  color:var(--verde);
+  padding:4px 10px;
+  border-radius:20px;
+  border:1px solid #c2e0cc;
+  font-weight:500;
+}
+.page{
+  margin-top:56px;
+  max-width:1280px;
+  margin-left:auto;
+  margin-right:auto;
+  padding:40px 32px;
+}
+.section{display:none}
+.section.active{display:block}
+.section-header{margin-bottom:32px;}
+.section-label{
+  font-family:'DM Mono',monospace;
+  font-size:.6875rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--texto-label);
+  margin-bottom:6px;
+  font-weight:500;
+}
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.75rem;
+  color:var(--texto);
+  font-weight:700;
+  line-height:1.2;
+}
+.section-title span{color:var(--verde)}
+.section-desc{
+  font-size:.875rem;
+  color:var(--texto-sec);
+  margin-top:6px;
+  max-width:580px;
+  line-height:1.6;
+}
+.kpi-row{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-bottom:32px;
+}
+.kpi-card{
+  background:var(--branco);
+  border:1px solid var(--borda);
+  border-radius:var(--r);
+  padding:24px;
+  box-shadow:var(--sombra);
+  transition:box-shadow .2s,transform .2s;
+  cursor:default;
+}
+.kpi-card:hover{box-shadow:var(--sombra-hover);transform:translateY(-1px)}
+.kpi-tag{
+  font-family:'DM Mono',monospace;
+  font-size:.6875rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--texto-label);
+  margin-bottom:12px;
+  display:flex;align-items:center;gap:6px;
+  font-weight:500;
+}
+.kpi-dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.kpi-value{
+  font-family:'Playfair Display',serif;
+  font-size:2rem;
+  font-weight:700;
+  line-height:1;
+  margin-bottom:4px;
+}
+.kpi-sub{font-size:.8125rem;color:var(--texto-sec);line-height:1.45;}
+.kpi-card.verde .kpi-tag .kpi-dot{background:var(--verde)}
+.kpi-card.verde .kpi-value{color:var(--verde)}
+.kpi-card.laranja .kpi-tag .kpi-dot{background:var(--laranja)}
+.kpi-card.laranja .kpi-value{color:var(--laranja)}
+.kpi-card.azul .kpi-tag .kpi-dot{background:var(--azul)}
+.kpi-card.azul .kpi-value{color:var(--azul)}
+.kpi-card.roxo .kpi-tag .kpi-dot{background:var(--roxo)}
+.kpi-card.roxo .kpi-value{color:var(--roxo)}
+.kpi-card.amarelo .kpi-tag .kpi-dot{background:var(--amarelo)}
+.kpi-card.amarelo .kpi-value{color:var(--amarelo)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:20px}
+.grid-1{display:grid;grid-template-columns:1fr;gap:20px;margin-bottom:20px}
+.span-2{grid-column:span 2}
+.card{
+  background:var(--branco);
+  border:1px solid var(--borda);
+  border-radius:var(--r);
+  padding:28px;
+  box-shadow:var(--sombra);
+}
+.card-label{
+  font-family:'DM Mono',monospace;
+  font-size:.6875rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--texto-label);
+  margin-bottom:4px;
+  font-weight:500;
+}
+.card-title{
+  font-size:1rem;
+  font-weight:600;
+  color:var(--texto);
+  margin-bottom:20px;
+  line-height:1.35;
+}
+.card-divider{height:1px;background:var(--borda);margin:20px 0;}
+.data-table{width:100%;border-collapse:collapse;font-size:.82rem;}
+.data-table thead th{
+  font-family:'DM Mono',monospace;
+  font-size:.6875rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--texto-sec);
+  padding:10px 14px;
+  text-align:left;
+  border-bottom:2px solid var(--borda);
+  white-space:nowrap;
+  background:var(--cinza-100);
+  font-weight:600;
+}
+.data-table thead th:first-child{border-radius:6px 0 0 0}
+.data-table thead th:last-child{border-radius:0 6px 0 0}
+.data-table tbody td{
+  padding:12px 14px;
+  border-bottom:1px solid var(--borda);
+  color:var(--texto);
+  vertical-align:middle;
+  line-height:1.45;
+}
+.data-table tbody tr:last-child td{border-bottom:none}
+.data-table tbody tr:hover td{background:#fafaf7}
+.data-table .num{text-align:right;font-family:'DM Mono',monospace;font-size:.78rem;font-weight:500;}
+.data-table .bold{font-weight:600}
+.data-table .verde{color:var(--verde);font-weight:600}
+.data-table .laranja{color:var(--laranja);font-weight:600}
+.data-table .azul{color:var(--azul);font-weight:600}
+.data-table .muted{color:var(--texto-sec);font-size:.8125rem}
+.total-row td{background:var(--cinza-100)!important;font-weight:700!important;border-top:2px solid var(--borda)!important;color:var(--texto)!important;}
+.total-row .num{color:var(--verde)!important;font-size:.85rem;}
+.badge{display:inline-block;font-family:'DM Mono',monospace;font-size:.62rem;padding:3px 8px;border-radius:4px;font-weight:500;}
+.badge-verde{background:var(--verde-claro);color:var(--verde)}
+.badge-laranja{background:var(--laranja-claro);color:var(--laranja)}
+.badge-azul{background:var(--azul-claro);color:var(--azul)}
+.badge-amarelo{background:var(--amarelo-claro);color:var(--amarelo)}
+.badge-roxo{background:var(--roxo-claro);color:var(--roxo)}
+.pack-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+.pack-card{
+  background:var(--branco);
+  border:1px solid var(--borda);
+  border-radius:var(--r);
+  padding:28px;
+  box-shadow:var(--sombra);
+  position:relative;
+  overflow:hidden;
+}
+.pack-card.featured{border-color:var(--verde);border-width:2px;}
+.pack-card.featured::before{
+  content:'MELHOR VALOR';
+  position:absolute;
+  top:16px;right:-24px;
+  background:var(--verde);
+  color:#fff;
+  font-family:'DM Mono',monospace;
+  font-size:.55rem;
+  letter-spacing:1.5px;
+  padding:4px 32px;
+  transform:rotate(45deg);
+  font-weight:600;
+}
+.pack-name{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--texto);margin-bottom:4px;}
+.pack-qty{font-size:.8125rem;color:var(--texto-sec);margin-bottom:20px;}
+.pack-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--borda);font-size:.83rem;}
+.pack-item:last-child{border-bottom:none}
+.pack-item-label{color:var(--texto-sec)}
+.pack-item-value{font-family:'DM Mono',monospace;font-weight:600;font-size:.83rem;}
+.pack-item-value.g{color:var(--verde)}
+.pack-item-value.o{color:var(--laranja)}
+.pack-item-value.a{color:var(--amarelo)}
+.pack-item-value.r{color:var(--roxo)}
+.margem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.margem-card{
+  border:1px solid var(--borda);
+  border-radius:var(--r);
+  padding:20px;
+  text-align:center;
+  background:var(--branco);
+  transition:box-shadow .2s,transform .2s;
+  cursor:default;
+}
+.margem-card:hover{box-shadow:var(--sombra-hover);transform:translateY(-2px)}
+.margem-pct{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;line-height:1;margin-bottom:4px;}
+.margem-label{font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;color:var(--texto-label);margin-bottom:8px;font-weight:500;}
+.margem-detail{font-size:.8125rem;color:var(--texto-sec);line-height:1.5;}
+.margem-detail strong{color:var(--texto);font-weight:600}
+.funnel-item{display:grid;grid-template-columns:170px 1fr 100px;align-items:center;gap:16px;margin-bottom:10px;}
+.funnel-label{font-size:.8125rem;color:var(--texto-sec);text-align:right;font-weight:500;}
+.funnel-bar-bg{background:var(--cinza-100);border-radius:4px;height:28px;overflow:hidden;border:1px solid var(--borda);}
+.funnel-bar-fill{
+  height:100%;border-radius:3px;
+  display:flex;align-items:center;
+  padding-left:10px;
+  font-family:'DM Mono',monospace;
+  font-size:.68rem;font-weight:500;color:#fff;
+  transition:width 1s cubic-bezier(.25,.46,.45,.94);
+  width:0;
+}
+.funnel-val{font-family:'DM Mono',monospace;font-size:.75rem;font-weight:600;text-align:right;color:var(--texto);}
+.chart-wrap{position:relative;padding-top:8px;}
+.info-row{
+  display:flex;gap:8px;align-items:flex-start;
+  padding:12px 16px;
+  background:var(--verde-claro);
+  border-radius:6px;
+  border:1px solid #c2e0cc;
+  margin-bottom:20px;
+  font-size:.8125rem;
+  color:#145c32;
+  line-height:1.55;
+}
+.info-row svg{flex-shrink:0;margin-top:2px}
+.info-row.orange{background:var(--laranja-claro);border-color:#f0c0a0;color:#8a3a0a;}
+.section-sep{height:1px;background:var(--borda);margin:32px 0;}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.on{opacity:1;transform:translateY(0)}
+/* etapas de processo */
+.process-step{display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--borda);}
+.process-step:last-child{border-bottom:none}
+.step-num{
+  font-family:'DM Mono',monospace;font-size:.75rem;font-weight:700;
+  width:28px;height:28px;
+  background:var(--verde-claro);color:var(--verde);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  margin-top:2px;
+}
+.step-body{}
+.step-title{font-weight:600;font-size:.875rem;color:var(--texto);}
+.step-desc{font-size:.8125rem;color:var(--texto-sec);margin-top:2px;}
+.step-temp{
+  font-family:'DM Mono',monospace;font-size:.7rem;
+  background:var(--cinza-100);
+  border:1px solid var(--borda);
+  padding:2px 8px;border-radius:4px;
+  color:var(--texto-suave);
+  display:inline-block;margin-top:4px;
+}
+/* embalagem detalhe */
+.emb-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.emb-card{
+  background:var(--cinza-100);
+  border:1px solid var(--borda);
+  border-radius:var(--r);
+  padding:20px;
+}
+.emb-title{font-weight:600;font-size:.875rem;color:var(--texto);margin-bottom:12px;}
+.emb-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--borda);font-size:.8125rem;}
+.emb-row:last-child{border-bottom:none}
+.emb-key{color:var(--texto-sec)}
+.emb-val{font-family:'DM Mono',monospace;font-weight:600;font-size:.78rem;color:var(--texto)}
+.emb-val.v{color:var(--verde)}
+@media(max-width:960px){
+  .kpi-row{grid-template-columns:1fr 1fr}
+  .grid-2,.pack-row,.emb-grid{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr 1fr}
+  .span-2{grid-column:span 1}
+  .page{padding:24px 16px}
+  .margem-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+    </div>
+    <span class="nav-brand-name">Camu<span>Gum</span></span>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="showSection('visao-geral',this)">Visão Geral</button>
+    <button class="nav-link" onclick="showSection('formulacao',this)">Formulação</button>
+    <button class="nav-link" onclick="showSection('custos',this)">Custos e MP</button>
+    <button class="nav-link" onclick="showSection('packs',this)">Packs & Preço</button>
+    <button class="nav-link" onclick="showSection('producao',this)">Produção</button>
+    <button class="nav-link" onclick="showSection('margem',this)">Margem</button>
+  </div>
+  <div class="nav-badge">Amazônica · Mai 2026</div>
+</nav>
+
+<div class="page">
+
+<!-- ══ VISÃO GERAL ══ -->
+<div id="visao-geral" class="section active">
+  <div class="section-header reveal">
+    <div class="section-label">Dashboard · Produto Piloto</div>
+    <div class="section-title">Visão <span>Geral</span></div>
+    <div class="section-desc">Goma de mascar 100% amazônica — base de sapoti, camu-camu, guaraná e cupuaçu. Biodegradável, sem plástico, sem açúcar.</div>
+  </div>
+
+  <div class="kpi-row reveal" style="transition-delay:.05s">
+    <div class="kpi-card verde">
+      <div class="kpi-tag"><span class="kpi-dot"></span>Custo por unidade</div>
+      <div class="kpi-value">R$ 1,39</div>
+      <div class="kpi-sub">Goma 5 g — custo industrial total</div>
+    </div>
+    <div class="kpi-card laranja">
+      <div class="kpi-tag"><span class="kpi-dot"></span>Matéria-prima / un.</div>
+      <div class="kpi-value">R$ 0,94</div>
+      <div class="kpi-sub">67% do custo industrial</div>
+    </div>
+    <div class="kpi-card azul">
+      <div class="kpi-tag"><span class="kpi-dot"></span>Batelada padrão</div>
+      <div class="kpi-value">2.000 un.</div>
+      <div class="kpi-sub">~10,5 kg de massa por lote</div>
+    </div>
+    <div class="kpi-card roxo">
+      <div class="kpi-tag"><span class="kpi-dot"></span>Cafeína / goma</div>
+      <div class="kpi-value">40 mg</div>
+      <div class="kpi-sub">Guaraná pó natural · 10% DDR · 3 gomas = 30%</div>
+    </div>
+  </div>
+
+  <div class="grid-2 reveal" style="transition-delay:.1s">
+    <div class="card">
+      <div class="card-label">Composição</div>
+      <div class="card-title">Percentual por peso — goma de 5 g</div>
+      <div class="chart-wrap"><canvas id="donutFormula" height="200"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-label">Custo Unitário</div>
+      <div class="card-title">Quebra do custo de R$ 1,39 por goma</div>
+      <div class="chart-wrap"><canvas id="donutCusto" height="200"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid-3 reveal" style="transition-delay:.15s">
+    <div class="kpi-card amarelo">
+      <div class="kpi-tag"><span class="kpi-dot"></span>Pack 5 · custo total</div>
+      <div class="kpi-value">R$ 7,11</div>
+      <div class="kpi-sub">5 gomas + kraft + rótulo</div>
+    </div>
+    <div class="kpi-card amarelo">
+      <div class="kpi-tag"><span class="kpi-dot"></span>Pack 5 · varejo 3×</div>
+      <div class="kpi-value">R$ 21,33</div>
+      <div class="kpi-sub">Margem bruta ~67%</div>
+    </div>
+    <div class="kpi-card verde">
+      <div class="kpi-tag"><span class="kpi-dot"></span>Pack 10 · varejo 3×</div>
+      <div class="kpi-value">R$ 42,45</div>
+      <div class="kpi-sub">Custo R$ 14,15 · margem bruta ~67%</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FORMULAÇÃO ══ -->
+<div id="formulacao" class="section">
+  <div class="section-header reveal">
+    <div class="section-label">Ficha Técnica</div>
+    <div class="section-title"><span>Formulação</span> Completa</div>
+    <div class="section-desc">5 ingredientes amazônicos e funcionais. Goma de 5 g, base 100% natural de chicle de sapoti, sem adoçantes artificiais.</div>
+  </div>
+
+  <div class="info-row reveal" style="transition-delay:.05s">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    Cada goma entrega <strong>40 mg de cafeína natural</strong> (guaraná pó · 10% da DDR) e <strong>13,75 mg de vitamina C</strong> (camu-camu liofilizado · 16,7% da DDR). Com 3 gomas/dia → 30% da DDR de cafeína e 50% da DDR de vitamina C. Vitamina C instável acima de 70 °C — todos os ativos são incorporados abaixo de 60 °C.
+  </div>
+
+  <div class="card reveal" style="transition-delay:.1s">
+    <div class="card-label">Formulação</div>
+    <div class="card-title">Ingredientes por unidade · Goma 5 g (base sapoti + ativos amazônicos)</div>
+    <table class="data-table" id="tblFormula"></table>
+  </div>
+
+  <div class="grid-2 reveal" style="transition-delay:.15s">
+    <div class="card">
+      <div class="card-label">Composição Visual</div>
+      <div class="card-title">Distribuição % dos ingredientes na fórmula</div>
+      <div class="chart-wrap"><canvas id="barFormula" height="200"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-label">Função de cada grupo</div>
+      <div class="card-title">Categorias funcionais e compostos ativos</div>
+      <table class="data-table" id="tblFuncoes"></table>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CUSTOS & MP ══ -->
+<div id="custos" class="section">
+  <div class="section-header reveal">
+    <div class="section-label">Finanças</div>
+    <div class="section-title">Custos e <span>Matéria-Prima</span></div>
+    <div class="section-desc">Preço por kg de cada insumo, custo no lote de 2.000 unidades, participação % no custo total e embalagens biodegradáveis.</div>
+  </div>
+
+  <div class="card reveal" style="transition-delay:.05s">
+    <div class="card-label">Matéria-prima · Ingredientes</div>
+    <div class="card-title">Preço por kg · Quantidade no lote · Custo e participação</div>
+    <table class="data-table" id="tblCustoMP"></table>
+  </div>
+
+  <div class="grid-2 reveal" style="transition-delay:.1s">
+    <div class="card">
+      <div class="card-label">Participação no custo MP</div>
+      <div class="card-title">Peso de cada ingrediente no custo total de MP</div>
+      <div class="chart-wrap"><canvas id="barCustoMP" height="240"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-label">Custo industrial completo</div>
+      <div class="card-title">Custo por goma — todos os componentes</div>
+      <table class="data-table" id="tblCustoUnit"></table>
+    </div>
+  </div>
+
+  <div class="card reveal" style="transition-delay:.15s">
+    <div class="card-label">Embalagem Biodegradável · Cálculo de Consumo</div>
+    <div class="card-title">Papel manteiga (individual) e papel kraft (pack) — custo por uso</div>
+    <div class="emb-grid" id="embGrid"></div>
+    <table class="data-table" id="tblEmb"></table>
+  </div>
+</div>
+
+<!-- ══ PACKS & PREÇO ══ -->
+<div id="packs" class="section">
+  <div class="section-header reveal">
+    <div class="section-label">Preço de Venda</div>
+    <div class="section-title">Packs & <span>Preço</span></div>
+    <div class="section-desc">Estrutura de custo completa para Pack 5 e Pack 10 com embalagem 100% biodegradável. Preço sugerido no atacado e varejo.</div>
+  </div>
+
+  <div class="info-row orange reveal" style="transition-delay:.03s">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+    Embalagem individual em <strong>papel manteiga biodegradável</strong> (12 cm × 6 cm por goma) + embalagem externa em <strong>papel kraft reciclável</strong>. Sem plástico, sem alumínio, 100% compostável.
+  </div>
+
+  <div class="pack-row reveal" style="transition-delay:.05s">
+    <div class="pack-card">
+      <div class="pack-name">Pack 5</div>
+      <div class="pack-qty">5 gomas · 25 g total · emb. kraft ~22×5×3 cm</div>
+      <div class="pack-item">
+        <span class="pack-item-label">5 gomas × R$ 1,385</span>
+        <span class="pack-item-value">R$ 6,93</span>
+      </div>
+      <div class="pack-item">
+        <span class="pack-item-label">Papel manteiga (5 wraps × R$ 0,048)</span>
+        <span class="pack-item-value">R$ 0,24</span>
+      </div>
+      <div class="pack-item">
+        <span class="pack-item-label">Papel kraft externo (1 pc · R$ 0,038)</span>
+        <span class="pack-item-value">R$ 0,04</span>
+      </div>
+      <div class="pack-item">
+        <span class="pack-item-label">Rótulo + impressão (tinta d'água)</span>
+        <span class="pack-item-value">R$ 0,15</span>
+      </div>
+      <div class="card-divider"></div>
+      <div class="pack-item">
+        <span class="pack-item-label">Custo industrial total</span>
+        <span class="pack-item-value">R$ 7,11</span>
+      </div>
+      <div class="pack-item">
+        <span class="pack-item-label">Preço atacado (2×)</span>
+        <span class="pack-item-value g">R$ 14,22</span>
+      </div>
+      <div class="pack-item">
+        <span class="pack-item-label">Preço varejo (3×)</span>
+        <span class="pack-item-value o">R$ 21,33</span>
+      </div>
+      <div class="pack-item">
+        <span class="pack-item-label">Margem bruta varejo</span>
+        <span class="pack-item-value r">66,7%</span>
+      </div>
+    </div>
+
+    <div class="pack-card featured">
+      <div class="pack-name">Pack 10</div>
+      <div class="pack-qty">10 gomas · 50 g total · emb. kraft ~42×5×3 cm</div>
+      <div class="pack-item">
+        <span class="pack-item-label">10 gomas × R$ 1,385</span>
+        <span class="pack-item-value">R$ 13,85</span>
+      </div>
+      <div class="pack-item">
+        <span class="pack-item-label">Papel manteiga (10 wraps × R$ 0,048)</span>
+        <span class="pack-item-value">R$ 0,48</span>
+      </div>
+      <div class="pack-item">
+        <span class="pack-item-label">Papel kraft externo (1 pc · R$ 0,101)</span>
+        <span class="pack-item-value">R$ 0,10</span>
+      </div>
+      <div class="pack-item">
+        <span class="pack-item-label">Rótulo + impressão (tinta d'água)</span>
+        <span class="pack-item-value">R$ 0,20</span>
+      </div>
+      <div class="card-divider"></div>
+      <div class="pack-item">
+        <span class="pack-item-label">Custo industrial total</span>
+        <span class="pack-item-value">R$ 14,15</span>
+      </div>
+      <div class="pack-item">
+        <span class="pack-item-label">Preço atacado (2×)</span>
+        <span class="pack-item-value g">R$ 28,30</span>
+      </div>
+      <div class="pack-item">
+        <span class="pack-item-label">Preço varejo (3×)</span>
+        <span class="pack-item-value o">R$ 42,45</span>
+      </div>
+      <div class="pack-item">
+        <span class="pack-item-label">Margem bruta varejo</span>
+        <span class="pack-item-value r">66,7%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal" style="transition-delay:.1s">
+    <div class="card-label">Comparativo</div>
+    <div class="card-title">Pack 5 vs Pack 10 — custo, atacado e varejo</div>
+    <div class="chart-wrap"><canvas id="barPacks" height="160"></canvas></div>
+  </div>
+</div>
+
+<!-- ══ PRODUÇÃO ══ -->
+<div id="producao" class="section">
+  <div class="section-header reveal">
+    <div class="section-label">Linha de Produção</div>
+    <div class="section-title"><span>Produção</span> & Processo</div>
+    <div class="section-desc">9 etapas de fabricação preservando os bioativos amazônicos. Curva de custo por escala de volume.</div>
+  </div>
+
+  <div class="grid-2 reveal" style="transition-delay:.05s">
+    <div class="card">
+      <div class="card-label">Cadeia Camu-Camu</div>
+      <div class="card-title">De fruta in natura → goma (por lote de 2.000 un.)</div>
+      <div id="funnelWrap" style="padding-top:8px"></div>
+    </div>
+    <div class="card">
+      <div class="card-label">Batelada Padrão</div>
+      <div class="card-title">Ingredientes para 2.000 unidades (~10,5 kg de massa)</div>
+      <table class="data-table" id="tblBatelada"></table>
+    </div>
+  </div>
+
+  <div class="card reveal" style="transition-delay:.1s">
+    <div class="card-label">Processo de Fabricação</div>
+    <div class="card-title">9 etapas — preservação dos bioativos abaixo de 60 °C</div>
+    <div id="processoWrap" style="padding-top:8px"></div>
+  </div>
+
+  <div class="card reveal" style="transition-delay:.15s;margin-top:20px">
+    <div class="card-label">Escala de Produção</div>
+    <div class="card-title">Como o custo por unidade cai com o aumento do volume</div>
+    <div class="chart-wrap"><canvas id="lineEscala" height="180"></canvas></div>
+  </div>
+</div>
+
+<!-- ══ MARGEM ══ -->
+<div id="margem" class="section">
+  <div class="section-header reveal">
+    <div class="section-label">Rentabilidade</div>
+    <div class="section-title">Cenários de <span>Margem</span></div>
+    <div class="section-desc">Seis cenários de precificação — do posicionamento entrada ao premium — para Pack 5 e Pack 10.</div>
+  </div>
+
+  <div class="margem-grid reveal" style="transition-delay:.05s" id="margemGrid"></div>
+
+  <div class="card reveal" style="transition-delay:.1s;margin-top:20px">
+    <div class="card-label">Margem Bruta por Cenário</div>
+    <div class="card-title">Comparativo visual de margem entre todos os cenários</div>
+    <div class="chart-wrap"><canvas id="barMargem" height="180"></canvas></div>
+  </div>
+
+  <div class="card reveal" style="transition-delay:.15s;margin-top:20px">
+    <div class="card-label">Tabela de Rentabilidade</div>
+    <div class="card-title">Detalhe completo: custo, venda, lucro bruto e multiplicador</div>
+    <table class="data-table" id="tblMargem"></table>
+  </div>
+</div>
+
+</div><!-- /page -->
+
+<script>
+// ════════════════════════════════════
+// DADOS CENTRAIS — nova fórmula (PDF)
+// ════════════════════════════════════
+const TOTAL_G = 5.283; // soma real dos ingredientes por goma
+const FORMULA = [
+  {nome:'Base Sapoti / Chicle Natural', gPorUn:3.332, precoBtoB:200, funcao:'Estrutura', cat:'base',     fonte:'~ Estimado (FOB México/Guatemala)'},
+  {nome:'Guaraná Pó Natural',           gPorUn:1.000, precoBtoB:168, funcao:'Estimulante',cat:'ativo',   fonte:'✓ Verificado'},
+  {nome:'Cupuaçu Spray Dried',          gPorUn:0.583, precoBtoB:150, funcao:'Sensorial',  cat:'sabor',   fonte:'~ Estimado'},
+  {nome:'Glicerina Vegetal USP',        gPorUn:0.300, precoBtoB:3.30,funcao:'Umectante',  cat:'base',    fonte:'✓ Verificado'},
+  {nome:'Camu-Camu Liofilizado',        gPorUn:0.068, precoBtoB:225, funcao:'Ativo C',    cat:'ativo',   fonte:'∑ Calculado'},
+];
+const LOTE = 2000;
+FORMULA.forEach(d=>{
+  d.pct       = d.gPorUn / TOTAL_G * 100;
+  d.kgLote    = d.gPorUn * LOTE / 1000;
+  d.custoUnit = d.gPorUn / 1000 * d.precoBtoB;
+  d.custoLote = d.kgLote * d.precoBtoB;
+});
+const totalMP     = FORMULA.reduce((s,d)=>s+d.custoLote,0); // ~R$1874
+const totalMPUnit = totalMP / LOTE;                          // ~R$0.937
+
+// Custo industrial por goma
+const custoUn = {
+  mp:       totalMPUnit, // R$0.937
+  manteiga: 0.048,       // papel manteiga biodeg. (R$30/15m → 625 gomas/rolo)
+  mdo:      0.25,        // mão de obra — 9 etapas manuais
+  energia:  0.07,        // energia + perdas processo
+  overhead: 0.08,        // análises + overhead
+};
+const custoUnTotal = Object.values(custoUn).reduce((a,b)=>a+b,0); // ~R$1.385
+
+// Embalagem kraft: R$76/rolo 60cm×150m
+// Pack5  (~30cm×15cm): 2 pçs/corte × (150×100/15) cortes = 2000 packs → R$0.038/pack
+// Pack10 (~50cm×20cm): 1 pç/corte  × (150×100/20) cortes =  750 packs → R$0.101/pack
+const EMB = {
+  manteigaPreco:76/2000,  // reaproveitando variável (kraft pack5)
+  MANTEIGA_PRECO_ROLO:30, MANTEIGA_METROS:15, MANTEIGA_GOMAS_ROLO:625,
+  KRAFT_PRECO_ROLO:76, KRAFT_LARGURA_CM:60, KRAFT_COMP_M:150,
+  KRAFT_PACK5_CUSTO:76/2000,   // R$0.038
+  KRAFT_PACK10_CUSTO:76/750,   // R$0.101
+};
+
+// Packs
+const PACK5  = {gomas:5,  kraft:EMB.KRAFT_PACK5_CUSTO,  rotulo:0.15};
+const PACK10 = {gomas:10, kraft:EMB.KRAFT_PACK10_CUSTO, rotulo:0.20};
+// custo = gomas×(custoUn+manteiga) + kraft + rótulo
+// nota: manteiga já está no custoUnTotal
+PACK5.custo  = PACK5.gomas  * custoUnTotal + PACK5.kraft  + PACK5.rotulo;
+PACK10.custo = PACK10.gomas * custoUnTotal + PACK10.kraft + PACK10.rotulo;
+
+// ════════════════════════════════════
+// PALETA & CHART.JS
+// ════════════════════════════════════
+const C = {
+  verde:'#1a7a45', verdeL:'#2ea05c', verdeX:'rgba(26,122,69,.12)',
+  laranja:'#d4621a',laranjaL:'rgba(212,98,26,.12)',
+  azul:'#1a4d7a',  azulL:'rgba(26,77,122,.12)',
+  roxo:'#5c3d9e',  roxoL:'rgba(92,61,158,.12)',
+  amarelo:'#c48a00',amareloL:'rgba(196,138,0,.12)',
+  cinza:'#5c5c56', cinzaL:'rgba(0,0,0,.04)',
+  borda:'#e0e0da',
+};
+Chart.defaults.font.family = "'DM Sans',sans-serif";
+Chart.defaults.font.size   = 11;
+Chart.defaults.color       = '#5c5c56';
+Chart.defaults.plugins.legend.labels.boxWidth = 10;
+Chart.defaults.plugins.legend.labels.padding  = 14;
+const TT = {
+  backgroundColor:'#fff', borderColor:C.borda, borderWidth:1,
+  titleColor:'#1a1a1a', bodyColor:'#3d3d38', padding:12, cornerRadius:6,
+  titleFont:{family:"'DM Sans',sans-serif",weight:'600',size:11},
+  bodyFont:{family:"'DM Mono',monospace",size:10},
+  displayColors:true, boxWidth:10,
+};
+const GRID = {color:'rgba(0,0,0,.05)'};
+
+// ════════════════════════════════════
+// NAVEGAÇÃO
+// ════════════════════════════════════
+function showSection(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(btn) btn.classList.add('active');
+  setTimeout(()=>{
+    document.querySelectorAll('#'+id+' .reveal').forEach(el=>{
+      el.classList.remove('on'); void el.offsetWidth; el.classList.add('on');
+    });
+    if(id==='formulacao' && !window._cf) buildChartBarFormula();
+    if(id==='custos'     && !window._cc) buildChartBarCustoMP();
+    if(id==='packs'      && !window._cp) buildChartBarPacks();
+    if(id==='producao'   && !window._cl){ buildFunnel(); buildProcesso(); buildChartLineEscala(); }
+    if(id==='margem'     && !window._cm) buildChartBarMargem();
+  },50);
+}
+
+// ════════════════════════════════════
+// TABELAS
+// ════════════════════════════════════
+const CAT_BADGE={base:'badge-azul',ativo:'badge-verde',sabor:'badge-laranja',aux:'badge-roxo'};
+
+function buildTblFormula(){
+  const t=document.getElementById('tblFormula');
+  t.innerHTML=`<thead><tr>
+    <th>Ingrediente</th><th style="text-align:center">Função</th>
+    <th class="num">% real</th><th class="num">Por Goma (g)</th>
+    <th class="num">Custo/un (R$)</th><th>Fonte / Confiança</th>
+  </tr></thead>`;
+  const body=document.createElement('tbody');
+  FORMULA.forEach(d=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td class="bold">${d.nome}</td>
+      <td style="text-align:center"><span class="badge ${CAT_BADGE[d.cat]}">${d.funcao}</span></td>
+      <td class="num">${d.pct.toFixed(2)}%</td>
+      <td class="num verde">${d.gPorUn.toFixed(3)} g</td>
+      <td class="num laranja">R$ ${d.custoUnit.toFixed(4)}</td>
+      <td class="muted">${d.fonte}</td>
+    `;
+    body.appendChild(tr);
+  });
+  const tr=document.createElement('tr'); tr.className='total-row';
+  tr.innerHTML=`<td>TOTAL</td><td></td><td class="num">100%</td>
+    <td class="num">~5,0 g</td>
+    <td class="num">R$ ${totalMPUnit.toFixed(3)}</td><td></td>`;
+  body.appendChild(tr); t.appendChild(body);
+}
+
+function buildTblFuncoes(){
+  const t=document.getElementById('tblFuncoes');
+  const grupos=[
+    {nome:'Base mastigável', ing:'Chicle sapoti + Glicerina',papel:'Estrutura biodegradável · textura'},
+    {nome:'Ativo energético',ing:'Guaraná pó natural',       papel:'40 mg cafeína · alerta mental'},
+    {nome:'Ativo vitamínico',ing:'Camu-camu liofilizado',    papel:'13,75 mg Vit. C · antioxidante'},
+    {nome:'Sensorial',       ing:'Cupuaçu spray dried',      papel:'Sabor frutal · polifenóis'},
+  ];
+  t.innerHTML=`<thead><tr><th>Grupo</th><th>Ingredientes</th><th>Papel Funcional</th></tr></thead>`;
+  const body=document.createElement('tbody');
+  grupos.forEach(g=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td class="bold">${g.nome}</td><td class="muted">${g.ing}</td><td>${g.papel}</td>`;
+    body.appendChild(tr);
+  });
+  t.appendChild(body);
+}
+
+function buildTblCustoMP(){
+  const t=document.getElementById('tblCustoMP');
+  t.innerHTML=`<thead><tr>
+    <th>Ingrediente</th>
+    <th class="num">Preço/kg (R$)</th>
+    <th class="num">Qtd. Lote (kg)</th>
+    <th class="num">Custo Lote (R$)</th>
+    <th class="num">Custo/un (R$)</th>
+    <th class="num">% Custo MP</th>
+  </tr></thead>`;
+  const body=document.createElement('tbody');
+  const sorted=[...FORMULA].sort((a,b)=>b.custoLote-a.custoLote);
+  sorted.forEach(d=>{
+    const pct=(d.custoLote/totalMP*100).toFixed(1);
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td class="bold">${d.nome}</td>
+      <td class="num">${d.precoBtoB.toFixed(2)}</td>
+      <td class="num">${d.kgLote.toFixed(3)}</td>
+      <td class="num laranja">${d.custoLote.toFixed(2)}</td>
+      <td class="num">${d.custoUnit.toFixed(4)}</td>
+      <td class="num verde">${pct}%</td>
+    `;
+    body.appendChild(tr);
+  });
+  const tr=document.createElement('tr'); tr.className='total-row';
+  tr.innerHTML=`<td>TOTAL · lote 2.000 un.</td><td></td>
+    <td class="num">${FORMULA.reduce((s,d)=>s+d.kgLote,0).toFixed(2)} kg</td>
+    <td class="num">R$ ${totalMP.toFixed(2)}</td>
+    <td class="num">R$ ${totalMPUnit.toFixed(4)}</td>
+    <td class="num">100%</td>`;
+  body.appendChild(tr); t.appendChild(body);
+}
+
+function buildTblCustoUnit(){
+  const t=document.getElementById('tblCustoUnit');
+  const itens=[
+    {nome:'Matéria-prima (5 ingred.)',       val:custoUn.mp,       nota:'67%'},
+    {nome:'Papel manteiga biodeg. / goma',   val:custoUn.manteiga, nota:'3%'},
+    {nome:'Mão de obra — 9 etapas manuais', val:custoUn.mdo,      nota:'18%'},
+    {nome:'Energia + perdas processo (5%)',  val:custoUn.energia,  nota:'5%'},
+    {nome:'Análises + overhead',             val:custoUn.overhead, nota:'6%'},
+  ];
+  t.innerHTML=`<thead><tr><th>Componente</th><th class="num">R$/goma</th><th class="num">%</th></tr></thead>`;
+  const body=document.createElement('tbody');
+  itens.forEach(it=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${it.nome}</td><td class="num">${it.val.toFixed(4)}</td><td class="num verde">${it.nota}</td>`;
+    body.appendChild(tr);
+  });
+  const tr=document.createElement('tr'); tr.className='total-row';
+  tr.innerHTML=`<td>CUSTO TOTAL / GOMA</td><td class="num">R$ ${custoUnTotal.toFixed(4)}</td><td class="num">100%</td>`;
+  body.appendChild(tr); t.appendChild(body);
+}
+
+function buildEmbGrid(){
+  const g=document.getElementById('embGrid');
+  const cards=[
+    {
+      title:'Papel Manteiga Biodegradável',
+      rows:[
+        {k:'Preço do rolo',          v:'R$ 30,00'},
+        {k:'Comprimento',            v:'15 m (1.500 cm)'},
+        {k:'Largura padrão',         v:'~30 cm'},
+        {k:'Corte por goma',         v:'12 cm × 6 cm'},
+        {k:'Wraps por rolo',         v:'625 gomas'},
+        {k:'Custo por goma',         v:'R$ 0,048', destaque:true},
+        {k:'Custo por Pack 5',       v:'R$ 0,24 (5×)'},
+        {k:'Custo por Pack 10',      v:'R$ 0,48 (10×)'},
+      ]
+    },
+    {
+      title:'Papel Kraft Biodegradável (rolo)',
+      rows:[
+        {k:'Preço do rolo',          v:'R$ 76,00'},
+        {k:'Largura',                v:'60 cm'},
+        {k:'Comprimento',            v:'150 m (15.000 cm)'},
+        {k:'Peça Pack 5 (~22×5×3cm)',v:'30 cm × 15 cm'},
+        {k:'Packs 5 por rolo',       v:'~2.000 unid.'},
+        {k:'Custo embal. Pack 5',    v:'R$ 0,038', destaque:true},
+        {k:'Peça Pack 10 (~42×5×3cm)',v:'50 cm × 20 cm'},
+        {k:'Packs 10 por rolo',      v:'~750 unid.'},
+        {k:'Custo embal. Pack 10',   v:'R$ 0,101', destaque:true},
+      ]
+    }
+  ];
+  g.innerHTML='';
+  cards.forEach(c=>{
+    const div=document.createElement('div'); div.className='emb-card';
+    let rows='';
+    c.rows.forEach(r=>{
+      rows+=`<div class="emb-row">
+        <span class="emb-key">${r.k}</span>
+        <span class="emb-val${r.destaque?' v':''}">${r.v}</span>
+      </div>`;
+    });
+    div.innerHTML=`<div class="emb-title">${c.title}</div>${rows}`;
+    g.appendChild(div);
+  });
+}
+
+function buildTblEmb(){
+  const t=document.getElementById('tblEmb');
+  t.innerHTML=`<thead><tr>
+    <th>Material</th><th class="num">Preço Rolo</th><th class="num">Qtd/Uso</th>
+    <th class="num">Uso por rolo</th><th class="num">Custo/uso</th><th>Aplicação</th>
+  </tr></thead>`;
+  const body=document.createElement('tbody');
+  const itens=[
+    {mat:'Papel manteiga biodeg.',   preco:'R$ 30,00', qtd:'12×6 cm/goma',   uso:'625 gomas',    custo:'R$ 0,048',  apl:'Envoltório individual de cada goma'},
+    {mat:'Papel kraft (Pack 5)',      preco:'R$ 76,00', qtd:'30×15 cm/pack',  uso:'2.000 packs',  custo:'R$ 0,038',  apl:'Embalagem externa 5 gomas'},
+    {mat:'Papel kraft (Pack 10)',     preco:'R$ 76,00', qtd:'50×20 cm/pack',  uso:'750 packs',    custo:'R$ 0,101',  apl:'Embalagem externa 10 gomas'},
+  ];
+  itens.forEach(it=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td class="bold">${it.mat}</td>
+      <td class="num">${it.preco}</td>
+      <td class="num">${it.qtd}</td>
+      <td class="num">${it.uso}</td>
+      <td class="num verde">${it.custo}</td>
+      <td class="muted">${it.apl}</td>
+    `;
+    body.appendChild(tr);
+  });
+  t.appendChild(body);
+}
+
+function buildTblBatelada(){
+  const t=document.getElementById('tblBatelada');
+  t.innerHTML=`<thead><tr><th>Ingrediente</th><th class="num">Qtd. (kg)</th><th class="num">Custo (R$)</th></tr></thead>`;
+  const body=document.createElement('tbody');
+  FORMULA.forEach(d=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${d.nome}</td><td class="num">${d.kgLote.toFixed(3)}</td><td class="num laranja">${d.custoLote.toFixed(2)}</td>`;
+    body.appendChild(tr);
+  });
+  const tr=document.createElement('tr'); tr.className='total-row';
+  tr.innerHTML=`<td>TOTAL (2.000 gomas de 5 g)</td>
+    <td class="num">${FORMULA.reduce((s,d)=>s+d.kgLote,0).toFixed(2)} kg</td>
+    <td class="num">R$ ${totalMP.toFixed(2)}</td>`;
+  body.appendChild(tr); t.appendChild(body);
+}
+
+function buildProcesso(){
+  const etapas=[
+    {n:1,titulo:'Purificação da Base',   desc:'Fervura do látex de sapoti para remoção de impurezas e excesso de água.',temp:'~100 °C · ~2 h'},
+    {n:2,titulo:'Resfriamento',          desc:'Aguardar resfriamento natural da massa até faixa segura para os ativos.', temp:'Até 50–60 °C'},
+    {n:3,titulo:'Adição da Glicerina',   desc:'Incorporar glicerina vegetal USP para plastificar e umectar a base.',     temp:'50–60 °C'},
+    {n:4,titulo:'Mistura dos Ativos',    desc:'Adicionar guaraná em pó e camu-camu liofilizado com agitação constante (12–15 min).', temp:'50–60 °C'},
+    {n:5,titulo:'Adição do Cupuaçu',     desc:'Incorporar cupuaçu spray dried nos últimos 3–5 min — preservar ésteres aromáticos.', temp:'50–60 °C'},
+    {n:6,titulo:'Moldagem',              desc:'Extrudar ou moldar a massa no formato 4 cm × 1,5 cm × 1 cm.', temp:'Ambiente'},
+    {n:7,titulo:'Resfriamento Final',    desc:'Resfriar as gomas até ficarem firmes para embalagem.',         temp:'15–20 °C · ~24 h'},
+    {n:8,titulo:'Embalagem Individual',  desc:'Envolver cada goma em papel manteiga biodegradável 12 cm × 6 cm.', temp:'Ambiente seco'},
+    {n:9,titulo:'Embalagem Externa',     desc:'Agrupar em papel kraft biodegradável (Pack 5 ou Pack 10) com rótulo.',  temp:'Ambiente seco'},
+  ];
+  const w=document.getElementById('processoWrap'); w.innerHTML='';
+  etapas.forEach(e=>{
+    const div=document.createElement('div'); div.className='process-step';
+    div.innerHTML=`
+      <div class="step-num">${e.n}</div>
+      <div class="step-body">
+        <div class="step-title">${e.titulo}</div>
+        <div class="step-desc">${e.desc}</div>
+        <span class="step-temp">${e.temp}</span>
+      </div>
+    `;
+    w.appendChild(div);
+  });
+}
+
+const CENARIOS=[
+  {desc:'Pack 5 · Entrada',  custo:PACK5.custo,  preco:15.00},
+  {desc:'Pack 5 · Padrão',   custo:PACK5.custo,  preco:19.90},
+  {desc:'Pack 5 · Premium',  custo:PACK5.custo,  preco:24.90},
+  {desc:'Pack 10 · Entrada', custo:PACK10.custo, preco:28.00},
+  {desc:'Pack 10 · Padrão',  custo:PACK10.custo, preco:36.90},
+  {desc:'Pack 10 · Premium', custo:PACK10.custo, preco:44.90},
+];
+CENARIOS.forEach(c=>{c.margem=(c.preco-c.custo)/c.preco*100});
+
+function buildTblMargem(){
+  const t=document.getElementById('tblMargem');
+  t.innerHTML=`<thead><tr>
+    <th>Cenário</th><th class="num">Custo (R$)</th><th class="num">Venda (R$)</th>
+    <th class="num">Lucro Bruto (R$)</th><th class="num">Margem</th><th class="num">Mult.</th>
+  </tr></thead>`;
+  const body=document.createElement('tbody');
+  CENARIOS.forEach(c=>{
+    const lucro=c.preco-c.custo;
+    const mult=(c.preco/c.custo).toFixed(1);
+    const cls=c.margem>65?'verde':c.margem>55?'laranja':'azul';
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td class="bold">${c.desc}</td>
+      <td class="num">R$ ${c.custo.toFixed(2)}</td>
+      <td class="num">R$ ${c.preco.toFixed(2)}</td>
+      <td class="num laranja">R$ ${lucro.toFixed(2)}</td>
+      <td class="num ${cls}">${c.margem.toFixed(1)}%</td>
+      <td class="num">${mult}×</td>
+    `;
+    body.appendChild(tr);
+  });
+  t.appendChild(body);
+}
+
+function buildMargemGrid(){
+  const cores=[C.verde,C.verdeL,C.azul,C.laranja,C.amarelo,C.roxo];
+  const g=document.getElementById('margemGrid');
+  CENARIOS.forEach((c,i)=>{
+    const d=document.createElement('div'); d.className='margem-card';
+    d.style.borderTopColor=cores[i]; d.style.borderTopWidth='3px';
+    d.innerHTML=`
+      <div class="margem-label">${c.desc}</div>
+      <div class="margem-pct" style="color:${cores[i]}">${c.margem.toFixed(1)}%</div>
+      <div class="margem-detail">
+        Venda <strong>R$ ${c.preco.toFixed(2)}</strong><br>
+        Custo <strong>R$ ${c.custo.toFixed(2)}</strong><br>
+        Lucro <strong>R$ ${(c.preco-c.custo).toFixed(2)}</strong>
+      </div>
+    `;
+    g.appendChild(d);
+  });
+}
+
+// ════════════════════════════════════
+// FUNIL
+// ════════════════════════════════════
+function buildFunnel(){
+  const itens=[
+    {label:'Fruta camu-camu (in natura)', val:'~4 kg',  pct:100, color:C.laranja},
+    {label:'Polpa bruta (rend. 20%)',      val:'~820 g', pct:20,  color:C.amarelo},
+    {label:'Pó liofilizado (÷10)',         val:'~82 g',  pct:6,   color:C.verde},
+    {label:'Por goma (1,4% da fórmula)',   val:'68 mg',  pct:1,   color:C.azul},
+  ];
+  const w=document.getElementById('funnelWrap'); w.innerHTML='';
+  itens.forEach(it=>{
+    const div=document.createElement('div'); div.className='funnel-item';
+    div.innerHTML=`
+      <div class="funnel-label">${it.label}</div>
+      <div class="funnel-bar-bg">
+        <div class="funnel-bar-fill" style="background:${it.color};width:0" data-w="${Math.max(it.pct,2)}">${it.val}</div>
+      </div>
+      <div class="funnel-val">${it.val}</div>
+    `;
+    w.appendChild(div);
+  });
+  setTimeout(()=>{
+    w.querySelectorAll('.funnel-bar-fill').forEach(el=>{el.style.width=el.dataset.w+'%'});
+  },200);
+}
+
+// ════════════════════════════════════
+// CHARTS
+// ════════════════════════════════════
+const CH_COLORS=[C.verde,C.laranja,C.azul,C.roxo,C.amarelo];
+
+function buildDonutFormula(){
+  new Chart(document.getElementById('donutFormula'),{
+    type:'doughnut',
+    data:{
+      labels:FORMULA.map(d=>d.nome),
+      datasets:[{data:FORMULA.map(d=>+d.pct.toFixed(2)),
+        backgroundColor:CH_COLORS,borderColor:'#fff',borderWidth:2,hoverOffset:6}]
+    },
+    options:{cutout:'60%',plugins:{
+      legend:{position:'bottom',labels:{color:'#5c5c56',font:{size:10}}},
+      tooltip:{...TT,callbacks:{label:(c)=>` ${c.label}: ${Number(c.parsed).toFixed(2)}%`}},
+    }}
+  });
+}
+
+function buildDonutCusto(){
+  new Chart(document.getElementById('donutCusto'),{
+    type:'doughnut',
+    data:{
+      labels:['Matéria-Prima','Papel Manteiga','Mão de Obra','Energia/Perdas','Overhead'],
+      datasets:[{
+        data:[custoUn.mp,custoUn.manteiga,custoUn.mdo,custoUn.energia,custoUn.overhead].map(v=>+v.toFixed(4)),
+        backgroundColor:[C.verde,C.azul,C.laranja,C.amarelo,C.roxo],
+        borderColor:'#fff',borderWidth:2,hoverOffset:6
+      }]
+    },
+    options:{cutout:'60%',plugins:{
+      legend:{position:'bottom',labels:{color:'#5c5c56',font:{size:10}}},
+      tooltip:{...TT,callbacks:{label:(c)=>` ${c.label}: R$ ${Number(c.parsed).toFixed(4)}`}},
+    }}
+  });
+}
+
+function buildChartBarFormula(){
+  window._cf=true;
+  const s=[...FORMULA].sort((a,b)=>b.pct-a.pct);
+  new Chart(document.getElementById('barFormula'),{
+    type:'bar',
+    data:{
+      labels:s.map(d=>d.nome.length>22?d.nome.slice(0,21)+'…':d.nome),
+      datasets:[{label:'% na fórmula',data:s.map(d=>+d.pct.toFixed(2)),
+        backgroundColor:s.map((_,i)=>CH_COLORS[i%CH_COLORS.length]),borderRadius:4,borderSkipped:false}]
+    },
+    options:{
+      indexAxis:'y',
+      plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:(c)=>` ${Number(c.parsed).toFixed(2)}%`}}},
+      scales:{x:{grid:GRID,ticks:{color:'#5c5c56',callback:v=>v+'%'}},y:{grid:{display:false},ticks:{font:{size:10},color:'#5c5c56'}}}
+    }
+  });
+}
+
+function buildChartBarCustoMP(){
+  window._cc=true;
+  const s=[...FORMULA].sort((a,b)=>a.custoLote-b.custoLote);
+  new Chart(document.getElementById('barCustoMP'),{
+    type:'bar',
+    data:{
+      labels:s.map(d=>d.nome.length>24?d.nome.slice(0,23)+'…':d.nome),
+      datasets:[{label:'Custo no Lote (R$)',data:s.map(d=>+d.custoLote.toFixed(2)),
+        backgroundColor:(ctx)=>{const v=parseFloat(ctx.raw);return v>500?C.laranja:v>100?C.amarelo:C.verde;},
+        borderRadius:4}]
+    },
+    options:{
+      indexAxis:'y',
+      plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:(c)=>` R$ ${Number(c.raw).toFixed(2)}`}}},
+      scales:{x:{grid:GRID,ticks:{color:'#5c5c56',callback:v=>'R$ '+v}},y:{grid:{display:false},ticks:{font:{size:10},color:'#5c5c56'}}}
+    }
+  });
+}
+
+function buildChartBarPacks(){
+  window._cp=true;
+  new Chart(document.getElementById('barPacks'),{
+    type:'bar',
+    data:{
+      labels:['Pack 5 · Custo','Pack 5 · Atacado 2×','Pack 5 · Varejo 3×','Pack 10 · Custo','Pack 10 · Atacado 2×','Pack 10 · Varejo 3×'],
+      datasets:[{label:'Preço (R$)',
+        data:[PACK5.custo,PACK5.custo*2,PACK5.custo*3,PACK10.custo,PACK10.custo*2,PACK10.custo*3].map(v=>+v.toFixed(2)),
+        backgroundColor:[C.cinza,C.verdeL,C.verde,C.cinza,C.laranja,C.amarelo],borderRadius:4}]
+    },
+    options:{
+      plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:(c)=>` R$ ${Number(c.raw).toFixed(2)}`}}},
+      scales:{x:{grid:{display:false},ticks:{color:'#5c5c56',font:{size:10}}},y:{grid:GRID,ticks:{color:'#5c5c56',callback:v=>'R$ '+v}}}
+    }
+  });
+}
+
+function buildChartLineEscala(){
+  window._cl=true;
+  const vols=[500,1000,2000,5000,10000,20000,50000];
+  function custo(n){
+    const mp=custoUn.mp+custoUn.manteiga;
+    const mdo=n<2000?.35:n<10000?.25:n<20000?.18:.13;
+    const en=n<5000?.08:.06;
+    const oh=n<5000?.10:n<20000?.07:.05;
+    return mp+mdo+en+oh;
+  }
+  new Chart(document.getElementById('lineEscala'),{
+    type:'line',
+    data:{
+      labels:vols.map(n=>n>=1000?(n/1000)+'k':n+' un'),
+      datasets:[
+        {label:'Custo total/un (R$)',data:vols.map(n=>+custo(n).toFixed(3)),
+          borderColor:C.verde,backgroundColor:'rgba(26,122,69,.07)',tension:.4,fill:true,
+          pointBackgroundColor:C.verde,pointRadius:5,pointHoverRadius:7,borderWidth:2},
+        {label:'Custo MP/un (R$) — fixo',data:vols.map(_=>+(custoUn.mp+custoUn.manteiga).toFixed(3)),
+          borderColor:C.laranja,borderDash:[5,4],tension:0,fill:false,pointRadius:0,borderWidth:1.5}
+      ]
+    },
+    options:{
+      plugins:{legend:{labels:{color:'#5c5c56'}},tooltip:{...TT,callbacks:{label:(c)=>` ${c.dataset.label}: R$ ${c.parsed.y}`}}},
+      scales:{
+        x:{grid:GRID,ticks:{color:'#5c5c56'}},
+        y:{grid:GRID,ticks:{color:'#5c5c56',callback:v=>'R$ '+v},suggestedMin:.90}
+      }
+    }
+  });
+}
+
+function buildChartBarMargem(){
+  window._cm=true;
+  new Chart(document.getElementById('barMargem'),{
+    type:'bar',
+    data:{
+      labels:CENARIOS.map(c=>c.desc),
+      datasets:[{label:'Margem Bruta (%)',
+        data:CENARIOS.map(c=>+c.margem.toFixed(1)),
+        backgroundColor:CENARIOS.map(c=>c.margem>65?C.verde:c.margem>55?C.verdeL:C.laranja),
+        borderRadius:4}]
+    },
+    options:{
+      plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:(c)=>` Margem: ${c.parsed.y}%`}}},
+      scales:{x:{grid:{display:false},ticks:{color:'#5c5c56',font:{size:10}}},y:{grid:GRID,ticks:{color:'#5c5c56',callback:v=>v+'%'},suggestedMax:75}}
+    }
+  });
+}
+
+// ════════════════════════════════════
+// SCROLL REVEAL
+// ════════════════════════════════════
+function initReveal(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')});
+  },{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+}
+
+// ════════════════════════════════════
+// INIT
+// ════════════════════════════════════
+document.addEventListener('DOMContentLoaded',()=>{
+  buildTblFormula();
+  buildTblFuncoes();
+  buildTblCustoMP();
+  buildTblCustoUnit();
+  buildEmbGrid();
+  buildTblEmb();
+  buildTblBatelada();
+  buildMargemGrid();
+  buildTblMargem();
+  buildDonutFormula();
+  buildDonutCusto();
+  initReveal();
+  setTimeout(()=>{
+    document.querySelectorAll('#visao-geral .reveal').forEach(el=>el.classList.add('on'));
+  },100);
+});
+</script>
+</body>
+</html>

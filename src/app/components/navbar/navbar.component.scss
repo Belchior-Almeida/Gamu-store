@@ -27,37 +27,14 @@
     flex-shrink: 0;
   }
 
-  &__logo-placeholder {
-    width: 120px;
-    height: 44px;
-    border: 2px solid var(--gamu-gold);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--gamu-gold-faint);
-    position: relative;
+  &__logo {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(1.05);
+    transition: opacity 0.2s;
 
-    &::before {
-      content: 'logo';
-      position: absolute;
-      top: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.6rem;
-      color: var(--gamu-gold);
-      background: var(--gamu-dark);
-      padding: 0 4px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-  }
-
-  &__logo-text {
-    font-size: 1.4rem;
-    font-weight: 900;
-    color: var(--gamu-gold);
-    letter-spacing: 4px;
+    &:hover { opacity: 0.9; }
   }
 
   &__links {
@@ -121,47 +98,58 @@
   }
 }
 
-// Mobile drawer
-:host ::ng-deep .mobile-drawer {
-  .p-drawer-content {
-    background: var(--gamu-dark) !important;
-    padding: 0 !important;
+// ─── Mobile Dropdown (sem scroll) ───────────────────────────────────────────
+.mobile-dropdown {
+  display: none;
+  max-height: 0;
+  overflow: hidden;
+  background: var(--gamu-dark);
+  border-top: 1px solid rgba(173, 167, 73, 0.1);
+  transition: max-height 0.3s ease, border-color 0.3s ease;
+
+  @media (max-width: 900px) {
+    display: block;
   }
-}
 
-.mobile-nav {
-  padding: 1.5rem;
-
-  &__brand {
-    text-align: center;
-    padding: 1rem 0 2rem;
-    border-bottom: 1px solid rgba(173, 167, 73, 0.15);
-    margin-bottom: 1rem;
+  &--open {
+    // 6 links × 52px + 1rem padding = ~328px — todos visíveis, sem scroll
+    max-height: 360px;
+    border-color: rgba(173, 167, 73, 0.2);
   }
 
   &__links {
     list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+    padding: 0.5rem 0;
   }
 
   &__link {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 1.25rem;
+    padding: 0.85rem 1.5rem;
     text-decoration: none;
     color: var(--gamu-text-light);
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 500;
-    border-radius: 8px;
-    transition: background 0.2s, color 0.2s;
+    transition: background 0.18s, color 0.18s;
 
-    &:hover,
-    &--active {
+    i {
+      font-size: 0.8rem;
+      color: var(--gamu-text-muted);
+      transition: color 0.18s, transform 0.18s;
+    }
+
+    &:hover {
       background: var(--gamu-gold-faint);
       color: var(--gamu-gold);
+      i { color: var(--gamu-gold); transform: translateX(3px); }
+    }
+
+    &--active {
+      color: var(--gamu-gold);
+      font-weight: 700;
+      background: var(--gamu-gold-faint);
+      i { color: var(--gamu-gold); }
     }
   }
 }

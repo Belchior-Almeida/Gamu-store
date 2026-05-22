@@ -41,45 +41,15 @@
     max-width: 700px;
   }
 
-  &__logo-placeholder {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+  &__logo-wrap {
+    margin-bottom: 0.5rem;
   }
 
-  &__logo-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 160px;
+  &__logo {
     height: 80px;
-    border: 2px dashed var(--gamu-gold);
-    border-radius: 10px;
-    justify-content: center;
-    background: var(--gamu-gold-faint);
-    padding: 0.5rem;
-  }
-
-  &__logo-text {
-    font-size: 2rem;
-    font-weight: 900;
-    color: var(--gamu-gold);
-    letter-spacing: 6px;
-    line-height: 1;
-  }
-
-  &__logo-sub {
-    font-size: 0.7rem;
-    color: var(--gamu-text-muted);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-  }
-
-  &__logo-note {
-    font-size: 0.7rem;
-    color: var(--gamu-text-muted);
-    font-style: italic;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(1.05) drop-shadow(0 4px 16px rgba(173,167,73,0.25));
   }
 
   &__title {

@@ -1,0 +1,373 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════════════════════════════════ -->
+<section class="dash-hero">
+  <div class="container">
+    <div class="dash-hero__badge">
+      <i class="pi pi-chart-line"></i>
+      Dashboard Financeiro · Goma de Mascar Amazônica
+    </div>
+    <h1 class="dash-hero__title">
+      Cenários de <span class="accent">Lucros e Preços</span>
+    </h1>
+    <p class="dash-hero__sub">
+      3 cenários de preço × 3 cenários de venda · lote de 2.000 unidades (400 packs de 5) · projeção anual de 12 meses
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     VARIÁVEIS — KPI CARDS
+═══════════════════════════════════════════════════════════════════════════ -->
+<section class="section-dark">
+  <div class="container">
+
+    <div class="section-label-row">
+      <span class="section-label">Variáveis do Negócio</span>
+    </div>
+
+    <div class="kpi-grid">
+
+      <div class="kpi-card kpi-card--gold">
+        <div class="kpi-card__label"><i class="pi pi-box"></i> Custo Total do Lote</div>
+        <div class="kpi-card__value">{{ formatBRL(lotCost) }}</div>
+        <div class="kpi-card__sub">400 packs × R$7,11 · MP: {{ formatBRL(lotMP) }}</div>
+      </div>
+
+      <div class="kpi-card kpi-card--green">
+        <div class="kpi-card__label"><i class="pi pi-tag"></i> Custo por Pack de 5</div>
+        <div class="kpi-card__value">{{ formatBRL(packCost) }}</div>
+        <div class="kpi-card__sub">MP R$4,69 · embal. R$0,43 · MdO R$1,25 · overhead R$0,75</div>
+      </div>
+
+      <div class="kpi-card kpi-card--teal">
+        <div class="kpi-card__label"><i class="pi pi-calculator"></i> Break-even (Preço Padrão)</div>
+        <div class="kpi-card__value">143 packs</div>
+        <div class="kpi-card__sub">R$19,90/pack para cobrir custo fixo de R$2.844 do lote</div>
+      </div>
+
+      <div class="kpi-card kpi-card--purple">
+        <div class="kpi-card__label"><i class="pi pi-star"></i> Melhor Cenário</div>
+        <div class="kpi-card__value">{{ formatBRL(7116) }}</div>
+        <div class="kpi-card__sub">400 packs a R$24,90 — margem bruta 71,4% por mês</div>
+      </div>
+
+    </div>
+
+    <!-- KPIs anuais por cenário -->
+    <div class="annual-kpis">
+      @for (k of annualKpis; track k.name) {
+        <div class="annual-kpi" [style.--ak-color]="k.color">
+          <div class="annual-kpi__name">{{ k.name }} — {{ formatBRL(k.price) }}/pack</div>
+          <div class="annual-kpi__profit" [class.positive]="k.totalProfit > 0" [class.negative]="k.totalProfit <= 0">
+            {{ formatBRL(k.totalProfit) }}
+          </div>
+          <div class="annual-kpi__row">
+            <span><i class="pi pi-check-circle"></i>{{ k.profitableMonths }}/12 meses lucrativos</span>
+            <span><i class="pi pi-calendar"></i>Break-even acumulado: <strong>{{ k.breakEvenMonth }}</strong></span>
+          </div>
+          <div class="annual-kpi__revenue">Receita anual total: {{ formatBRL(k.totalRevenue) }}</div>
+        </div>
+      }
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     3 × 3 CENÁRIOS DE PREÇO × VENDA
+═══════════════════════════════════════════════════════════════════════════ -->
+<section class="section-scenarios">
+  <div class="container">
+
+    <div class="section-label-row">
+      <span class="section-label">Tabela de Cenários</span>
+      <span class="section-label-hint">custo fixo do lote: {{ formatBRL(lotCost) }} · 400 packs produzidos/mês</span>
+    </div>
+
+    <div class="scenarios-grid">
+      @for (ps of priceScenarios; track ps.name) {
+        <div class="price-scenario" [style.--ps-color]="ps.color" [style.--ps-bg]="ps.bgColor" [style.--ps-border]="ps.borderColor">
+
+          <div class="price-scenario__header">
+            <div class="price-scenario__header-left">
+              <span class="price-scenario__badge">{{ ps.name }}</span>
+              <span class="price-scenario__price">R${{ ps.price.toFixed(2) }}<span class="price-scenario__unit">/pack</span></span>
+            </div>
+            <div class="price-scenario__breakeven">
+              <i class="pi pi-info-circle"></i>
+              Break-even: <strong>{{ ps.breakEvenPacks }} packs</strong>
+            </div>
+          </div>
+
+          <div class="sub-scenarios">
+            @for (sub of ps.sub; track sub.label) {
+              <div class="sub-card" [class.sub-card--profit]="sub.isProfit" [class.sub-card--loss]="!sub.isProfit">
+
+                <div class="sub-card__header">
+                  <span class="sub-card__label">
+                    <i class="pi {{ sub.icon }}"></i>{{ sub.label }}
+                  </span>
+                  <span class="sub-card__packs">{{ sub.packs }} packs</span>
+                </div>
+
+                <div class="sub-card__pct-bar">
+                  <div class="sub-card__pct-fill" [style.width.%]="sub.pct"></div>
+                </div>
+                <span class="sub-card__pct-label">{{ sub.pct }}% do lote vendido</span>
+
+                <div class="sub-card__metrics">
+                  <div class="sub-card__metric">
+                    <span class="sub-card__metric-label">Receita</span>
+                    <span class="sub-card__metric-value sub-card__metric-value--neutral">{{ formatBRL(sub.revenue) }}</span>
+                  </div>
+                  <div class="sub-card__metric">
+                    <span class="sub-card__metric-label">Custo Lote</span>
+                    <span class="sub-card__metric-value sub-card__metric-value--cost">{{ formatBRL(lotCost) }}</span>
+                  </div>
+                  <div class="sub-card__metric sub-card__metric--result">
+                    <span class="sub-card__metric-label">Lucro Bruto</span>
+                    <span class="sub-card__metric-value"
+                      [class.sub-card__metric-value--profit]="sub.isProfit"
+                      [class.sub-card__metric-value--loss]="!sub.isProfit">
+                      {{ formatBRL(sub.profit) }}
+                    </span>
+                  </div>
+                  <div class="sub-card__metric">
+                    <span class="sub-card__metric-label">Margem</span>
+                    <span class="sub-card__metric-value"
+                      [class.sub-card__metric-value--profit]="sub.isProfit"
+                      [class.sub-card__metric-value--loss]="!sub.isProfit">
+                      {{ sub.margin | number:'1.1-1' }}%
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+            }
+          </div>
+
+        </div>
+      }
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     GRÁFICO DE LINHAS — ANÁLISE ANUAL
+═══════════════════════════════════════════════════════════════════════════ -->
+<section class="section-linechart">
+  <div class="container">
+
+    <!-- Cabeçalho da seção -->
+    <div class="lc-header">
+      <div class="section-label-row">
+        <span class="section-label">Gráfico de Linhas — Projeção Anual</span>
+        <span class="section-label-hint">12 meses · lote 400 packs/mês · custo fixo R$2.844</span>
+      </div>
+      <p class="lc-desc">
+        Análise mensal do primeiro ano de operação com sazonalidade real do mercado brasileiro.
+        Use os filtros abaixo para navegar por período, trocar a métrica e alternar os cenários de preço.
+      </p>
+    </div>
+
+    <!-- ── Toolbar de filtros (2 linhas) ────────────────────────────────── -->
+    <div class="lc-toolbar">
+
+      <!-- Linha 1: Métrica + Cenários de preço -->
+      <div class="lc-toolbar-row">
+
+        <!-- Métrica -->
+        <div class="lc-col">
+          <span class="lc-col-label"><i class="pi pi-chart-line"></i> Métrica</span>
+          <div class="lc-btn-group lc-btn-group--col">
+            @for (m of metricOptions; track m.key) {
+              <button class="lc-btn" [class.lc-btn--active]="selectedMetric === m.key" (click)="setMetric(m.key)">
+                <i class="pi {{ m.icon }}"></i> {{ m.label }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <div class="lc-col-divider"></div>
+
+        <!-- Cenários de preço -->
+        <div class="lc-col lc-col--grow">
+          <span class="lc-col-label"><i class="pi pi-filter"></i> Cenários de Preço
+            @if (selectedMetric === 'volume') {
+              <span class="lc-col-label-note">(exibindo volume independente de preço)</span>
+            }
+          </span>
+          <div class="lc-toggle-group">
+            @for (p of priceDefs; track p.name) {
+              <button class="lc-toggle"
+                      [class.lc-toggle--active]="activeScenarios[p.name]"
+                      [class.lc-toggle--disabled]="selectedMetric === 'volume'"
+                      [style.--tc]="p.color"
+                      (click)="selectedMetric !== 'volume' && toggleScenario(p.name)">
+                <span class="lc-toggle__dot"></span>
+                {{ p.name }} — R${{ p.price.toFixed(2) }}
+              </button>
+            }
+          </div>
+        </div>
+
+      </div>
+
+      <div class="lc-row-divider"></div>
+
+      <!-- Linha 2: Período/Zoom + Escala Y -->
+      <div class="lc-toolbar-row">
+
+        <!-- Período / Zoom -->
+        <div class="lc-col">
+          <span class="lc-col-label"><i class="pi pi-search-plus"></i> Período / Zoom</span>
+          <div class="lc-btn-group lc-btn-group--period">
+            @for (rp of rangePresets; track rp.label) {
+              <button class="lc-btn" [class.lc-btn--active]="isRangeActive(rp.start, rp.end)"
+                      (click)="setRange(rp.start, rp.end)">
+                {{ rp.label }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <div class="lc-col-divider"></div>
+
+        <!-- Escala Vertical Y -->
+        <div class="lc-col lc-col--grow" [class.lc-col--disabled]="selectedMetric === 'volume'">
+          <span class="lc-col-label">
+            <i class="pi pi-arrows-v"></i> Escala Vertical — Eixo Y
+            @if (selectedMetric === 'volume') {
+              <span class="lc-col-label-note">(escala auto em packs)</span>
+            }
+          </span>
+          <div class="y-scale">
+
+            <!-- Máximo -->
+            <div class="y-scale-track">
+              <div class="y-scale-header">
+                <span class="y-scale-side">Máx.</span>
+                <span class="y-scale-val y-scale-val--max">{{ fmtY(yMax) }}</span>
+              </div>
+              <input type="range"
+                     class="y-slider y-slider--max"
+                     [min]="Y_STEP" [max]="Y_MAX_LIMIT" [step]="Y_STEP"
+                     [value]="yMax"
+                     [disabled]="selectedMetric === 'volume'"
+                     [ngStyle]="{'--fill': fillPct(yMax, Y_STEP, Y_MAX_LIMIT)}"
+                     (input)="onYMaxChange($event)" />
+              <div class="y-scale-marks">
+                <span>R$500</span>
+                <span>R$5k</span>
+                <span>R$10k</span>
+              </div>
+            </div>
+
+            <!-- Mínimo -->
+            <div class="y-scale-track">
+              <div class="y-scale-header">
+                <span class="y-scale-side">Mín.</span>
+                <span class="y-scale-val y-scale-val--min">{{ fmtY(yMin) }}</span>
+              </div>
+              <input type="range"
+                     class="y-slider y-slider--min"
+                     [min]="Y_MIN_LIMIT" [max]="0" [step]="Y_STEP"
+                     [value]="yMin"
+                     [disabled]="selectedMetric === 'volume'"
+                     [ngStyle]="{'--fill': fillPct(yMin, Y_MIN_LIMIT, 0)}"
+                     (input)="onYMinChange($event)" />
+              <div class="y-scale-marks">
+                <span>-R$5k</span>
+                <span>-R$2,5k</span>
+                <span>R$0</span>
+              </div>
+            </div>
+
+            <!-- Controles finais -->
+            <div class="y-scale-footer">
+              <div class="y-scale-range-display">
+                <i class="pi pi-arrows-v"></i>
+                Faixa atual:
+                <strong>{{ fmtY(yMin) }}</strong>
+                <span class="y-scale-arrow">→</span>
+                <strong>{{ fmtY(yMax) }}</strong>
+                <span class="y-scale-step">· passo R$500</span>
+              </div>
+              <button class="lc-btn lc-btn--sm" [class.lc-btn--active]="yAuto" (click)="resetYAxis()">
+                <i class="pi pi-refresh"></i> Auto
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ── Barra de info ──────────────────────────────────────────────────── -->
+    <div class="lc-infobar">
+      <div class="lc-infobar__left">
+        <span class="lc-infobar__range">
+          <i class="pi pi-calendar-range"></i>
+          <strong>{{ monthLabels[rangeStart] }} → {{ monthLabels[rangeEnd] }}</strong>
+          &nbsp;·&nbsp; {{ rangeEnd - rangeStart + 1 }} meses &nbsp;·&nbsp; {{ currentMetricLabel }}
+        </span>
+      </div>
+      <div class="lc-infobar__right">
+        <span class="dot-legend dot-legend--up"></span> Evento positivo
+        <span class="dot-legend dot-legend--down"></span> Queda
+        <span class="dot-legend dot-legend--neutral"></span> Neutro
+        <span class="lc-infobar__hint"><i class="pi pi-mouse"></i> Passe o mouse para detalhes</span>
+      </div>
+    </div>
+
+    <!-- ── Canvas do gráfico ──────────────────────────────────────────────── -->
+    <div class="lc-chart-outer">
+      @if (lineChartData) {
+        <p-chart
+          type="line"
+          [data]="lineChartData"
+          [options]="lineChartOptions"
+          [height]="chartHeight"
+          styleClass="lc-canvas"
+        />
+      }
+    </div>
+
+    <!-- ── Timeline de eventos do período ────────────────────────────────── -->
+    @if (visibleEvents.length > 0) {
+      <div class="event-timeline">
+        <div class="event-timeline__title">
+          <i class="pi pi-calendar"></i> Eventos do Período
+        </div>
+        <div class="event-timeline__track">
+          <div class="event-timeline__line"></div>
+          @for (ev of visibleEvents; track ev.month) {
+            <div class="event-node"
+                 [class.event-node--up]="ev.type === 'up'"
+                 [class.event-node--down]="ev.type === 'down'"
+                 [class.event-node--neutral]="ev.type === 'neutral'">
+              <div class="event-node__dot">
+                <i class="pi"
+                   [ngClass]="{
+                     'pi-trending-up':   ev.type === 'up',
+                     'pi-trending-down': ev.type === 'down',
+                     'pi-minus':         ev.type === 'neutral'
+                   }"></i>
+              </div>
+              <div class="event-node__abbr">{{ ev.abbr }}</div>
+              <div class="event-node__card">
+                <div class="event-node__card-label">{{ ev.label }}</div>
+                <div class="event-node__card-detail">{{ ev.detail }}</div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+  </div>
+</section>

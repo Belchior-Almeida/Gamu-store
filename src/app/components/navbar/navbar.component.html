@@ -3,10 +3,7 @@
 
     <!-- Logo -->
     <a class="navbar__brand" routerLink="/">
-      <!-- Espaço reservado para a logo -->
-      <div class="navbar__logo-placeholder">
-        <span class="navbar__logo-text">GAMU</span>
-      </div>
+      <img class="navbar__logo" src="assets/images/LOGO.png" alt="Gamu Store" />
     </a>
 
     <!-- Desktop links -->
@@ -40,27 +37,17 @@
       <i class="pi" [ngClass]="mobileMenuOpen ? 'pi-times' : 'pi-bars'"></i>
     </button>
   </div>
-</nav>
 
-<!-- Mobile Drawer -->
-<p-drawer
-  [(visible)]="mobileMenuOpen"
-  header=""
-  position="top"
-  styleClass="mobile-drawer"
->
-  <div class="mobile-nav">
-    <div class="mobile-nav__brand">
-      <span class="navbar__logo-text">GAMU</span>
-    </div>
-    <ul class="mobile-nav__links">
+  <!-- Mobile dropdown inline — sem scroll, todos os links visíveis de uma vez -->
+  <div class="mobile-dropdown" [class.mobile-dropdown--open]="mobileMenuOpen">
+    <ul class="mobile-dropdown__links">
       @for (link of navLinks; track link.path) {
         <li>
           <a
             [routerLink]="link.path"
-            routerLinkActive="mobile-nav__link--active"
+            routerLinkActive="mobile-dropdown__link--active"
             [routerLinkActiveOptions]="{ exact: link.path === '/' }"
-            class="mobile-nav__link"
+            class="mobile-dropdown__link"
             (click)="closeMobileMenu()"
           >
             <span>{{ link.label }}</span>
@@ -70,4 +57,4 @@
       }
     </ul>
   </div>
-</p-drawer>
+</nav>

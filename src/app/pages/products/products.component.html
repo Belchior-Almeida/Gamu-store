@@ -1,9 +1,9 @@
 <!-- ─── Page Header ──────────────────────────────────────────────────────── -->
 <section class="page-header">
   <div class="container">
-    <h1 class="page-header__title">Nossos Produtos</h1>
+    <h1 class="page-header__title">Nossas Gomas</h1>
     <p class="page-header__subtitle">
-      Superfrutas amazônicas selecionadas com cuidado — da floresta para você.
+      Goma de mascar 100% amazônica — 4 sabores únicos. Pack de 5 unidades · R$19,90
     </p>
   </div>
 </section>
@@ -74,13 +74,13 @@
           @for (product of filteredProducts; track product.id) {
             <div class="product-card">
               <div class="product-card__image-area">
-                <div class="product-card__image-placeholder">
-                  <i class="pi pi-image"></i>
-                </div>
-                <span class="product-card__category">{{ product.category }}</span>
-                @if (product.featured) {
-                  <span class="product-card__badge">Destaque</span>
-                }
+                <img
+                  class="product-card__image"
+                  [src]="product.image"
+                  [alt]="product.name"
+                  loading="lazy"
+                />
+                <span class="product-card__flavor">{{ product.name.split(' ').slice(1).join(' ') }}</span>
               </div>
               <div class="product-card__body">
                 <h3 class="product-card__name">{{ product.name }}</h3>
