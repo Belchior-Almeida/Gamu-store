@@ -18,32 +18,32 @@ export class HomeComponent implements OnInit {
   featuredProducts: Product[] = [];
 
   stats = [
-    { value: '200+',  label: 'Famílias beneficiadas' },
-    { value: '8',     label: 'Superfrutas amazônicas' },
-    { value: '5.000', label: 'Hectares protegidos' },
-    { value: '3',     label: 'Países exportadores' },
+    { value: '4',      label: 'Sabores únicos'        },
+    { value: '100%',   label: 'Natural e amazônico'   },
+    { value: '5g',     label: 'Por goma (base sapoti)'},
+    { value: 'R$19,90',label: 'Pack de 5 unidades'    },
   ];
 
   highlights = [
     {
       icon: 'pi pi-leaf',
-      title: 'Sustentável',
-      text: 'Colheita responsável que preserva a floresta para as próximas gerações.',
+      title: 'Biodegradável',
+      text: 'Embalagem em papel manteiga e kraft — sem plástico, sem alumínio, 100% compostável.',
     },
     {
-      icon: 'pi pi-users',
-      title: 'Justo',
-      text: 'Comércio justo com comunidades ribeirinhas e indígenas da Amazônia.',
-    },
-    {
-      icon: 'pi pi-verified',
-      title: 'Certificado',
-      text: 'Orgânico Brasil, Fair Trade e Rainforest Alliance. Qualidade comprovada.',
+      icon: 'pi pi-bolt',
+      title: 'Energizante',
+      text: '40 mg de cafeína natural por goma via guaraná em pó. Alerta e foco sem estimulantes artificiais.',
     },
     {
       icon: 'pi pi-heart',
-      title: 'Nutritivo',
-      text: 'Superalimentos com concentrações únicas de vitaminas e antioxidantes.',
+      title: 'Vitamina C',
+      text: 'Camu-camu liofilizado fornece 13,75 mg de Vitamina C por goma — a fruta mais rica do mundo.',
+    },
+    {
+      icon: 'pi pi-verified',
+      title: 'Sem açúcar',
+      text: 'Base de sapoti 100% natural, sem adoçantes artificiais, sem corantes, sem conservantes.',
     },
   ];
 

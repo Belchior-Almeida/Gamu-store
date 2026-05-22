@@ -14,8 +14,8 @@
     </h1>
 
     <p class="hero__subtitle animate-fade-in-up">
-      Superfrutas nativas colhidas com respeito à floresta, levadas
-      diretamente das comunidades amazônicas para a sua mesa.
+      Goma de mascar 100% amazônica — camu-camu, guaraná e base de sapoti.
+      Biodegradável, sem açúcar, 4 sabores únicos da floresta.
     </p>
 
     <div class="hero__actions animate-fade-in-up">
@@ -82,24 +82,25 @@
 <!-- ─── Featured Products ─────────────────────────────────────────────────── -->
 <section class="featured section section-forest">
   <div class="container">
-    <h2 class="section-title">Destaques da Floresta</h2>
+    <h2 class="section-title">Nossos 4 Sabores</h2>
     <p class="section-subtitle">
-      Conheça nossos produtos mais amados — superfrutas amazônicas com sabores únicos e propriedades excepcionais.
+      Goma de mascar 100% amazônica — base de sapoti, camu-camu e guaraná. Biodegradável, sem plástico, sem açúcar.
     </p>
 
     <div class="featured__grid">
       @for (product of featuredProducts; track product.id) {
         <div class="product-card">
           <div class="product-card__image-area">
-            <div class="product-card__image-placeholder">
-              <i class="pi pi-image"></i>
-              <span>{{ product.name }}</span>
-            </div>
-            <span class="product-card__category">{{ product.category }}</span>
+            <img
+              class="product-card__image"
+              [src]="product.image"
+              [alt]="product.name"
+              loading="lazy"
+            />
           </div>
           <div class="product-card__body">
             <h3 class="product-card__name">{{ product.name }}</h3>
-            <p class="product-card__description">{{ product.description | slice:0:100 }}...</p>
+            <p class="product-card__description">{{ product.description | slice:0:90 }}...</p>
             <div class="product-card__tags">
               @for (tag of product.tags.slice(0, 2); track tag) {
                 <p-tag [value]="tag" styleClass="p-tag-gamu" />
