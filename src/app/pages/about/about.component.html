@@ -55,10 +55,9 @@
       </p>
       <div class="team-grid">
         @for (member of company.team; track member.name) {
-          <div class="team-card">
+          <div class="team-card" [style.--member-color]="member.color">
             <div class="team-card__avatar">
-              <i class="pi pi-user"></i>
-              <span class="team-card__avatar-note">[ foto ]</span>
+              <span class="team-card__initials">{{ getInitials(member.name) }}</span>
             </div>
             <div class="team-card__info">
               <h3 class="team-card__name">{{ member.name }}</h3>

@@ -29,22 +29,34 @@
   ],
   "team": [
     {
-      "name": "Ana Beatriz Lima",
-      "role": "Fundadora & CEO",
-      "bio": "Bióloga com 15 anos de experiência em etnobotânica amazônica.",
-      "image": "assets/images/team/ana.jpg"
+      "name": "Pedro Arthur",
+      "role": "CEO — Chief Executive Officer",
+      "bio": "Lidera a visão estratégica da Gamu, conectando o produto amazônico ao mercado nacional com foco em crescimento sustentável.",
+      "color": "#ada749"
     },
     {
-      "name": "Carlos Mendes",
-      "role": "Diretor de Operações",
-      "bio": "Engenheiro agrônomo especializado em cadeia produtiva sustentável.",
-      "image": "assets/images/team/carlos.jpg"
+      "name": "Pedro Belchior",
+      "role": "CTIO — Chief Technology & Innovation Officer",
+      "bio": "Responsável pela tecnologia e inovação da Gamu, do site à automação de processos e análise de dados de negócio.",
+      "color": "#2ea05c"
     },
     {
-      "name": "Mariana Souza",
-      "role": "Head de Qualidade",
-      "bio": "Nutricionista e pesquisadora de alimentos funcionais amazônicos.",
-      "image": "assets/images/team/mariana.jpg"
+      "name": "Jordana Martins",
+      "role": "Nutricionista",
+      "bio": "Especialista em alimentos funcionais e formulação nutricional. Garante o equilíbrio entre sabor, saúde e biodisponibilidade dos ativos amazônicos.",
+      "color": "#29a09a"
+    },
+    {
+      "name": "Ricardo Kenji",
+      "role": "Designer",
+      "bio": "Responsável pela identidade visual da marca Gamu, das embalagens biodegradáveis ao design digital dos produtos.",
+      "color": "#6d4fc4"
+    },
+    {
+      "name": "Luiz Felipe",
+      "role": "Head de Marketing",
+      "bio": "Desenvolve as estratégias de comunicação e posicionamento da marca, levando a história amazônica da Gamu ao público certo.",
+      "color": "#d4621a"
     }
   ],
   "production": {
